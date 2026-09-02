@@ -1,0 +1,342 @@
+{
+  "101": {
+    "piso": 1,
+    "manana": {
+      "grado": "—",
+      "nombre": "Jesus David Villamizar Valencia",
+      "area": "Matemáticas"
+    }
+  },
+  "102": {
+    "piso": 1,
+    "manana": {
+      "grado": "6B",
+      "nombre": "Magda Lisbeth Riaño Vargas",
+      "area": null
+    },
+    "tarde": {
+      "grado": "3-A",
+      "nombre": "Nidia Yaneth Mondragon Piñeros",
+      "area": "Informática"
+    }
+  },
+  "103": {
+    "piso": 1,
+    "manana": null,
+    "tarde": {
+      "grado": "3-B",
+      "nombre": "Nayibe Estepa Lopez",
+      "area": "Plan Lector, Ética y Religión"
+    }
+  },
+  "104": {
+    "piso": 1,
+    "manana": {
+      "grado": "6C",
+      "nombre": "Ana Sulay Arcos Pacheco",
+      "area": "Sociales - C. Políticas"
+    },
+    "tarde": {
+      "grado": "3-C",
+      "nombre": "Ana Gertrudis Cardenas Cardenas",
+      "area": "Inglés - Ciencias Naturales"
+    }
+  },
+  "105": {
+    "piso": 1,
+    "tarde": {
+      "grado": "3-D",
+      "nombre": "Hector Alirio Motavita Sanchez",
+      "area": null
+    },
+    "manana": {
+      "grado": "6E",
+      "nombre": "Marcela Correa Higuera",
+      "area": null
+    }
+  },
+  "106": {
+    "piso": 1,
+    "tarde": {
+      "grado": "4-A",
+      "nombre": "Doris Mayer Davila Alfonso",
+      "area": null
+    },
+    "manana": {
+      "grado": "8A",
+      "nombre": "Jose Leonardo Rosas Chaparro",
+      "area": "Inglés"
+    }
+  },
+  "107": {
+    "piso": 1,
+    "manana": {
+      "grado": "7B",
+      "nombre": "Olga Milena Restrepo Lopez",
+      "area": "Inglés"
+    },
+    "tarde": {
+      "grado": "4-B",
+      "nombre": "Yaneth Garzon Beltran",
+      "area": "Lengua Castellana, Artes, Ética"
+    }
+  },
+  "108": {
+    "piso": 1,
+    "manana": {
+      "grado": "10C",
+      "nombre": "Darly Ximena Silva Fetecua",
+      "area": null
+    },
+    "tarde": {
+      "grado": "4-C",
+      "nombre": "Hernando Garcia Silva",
+      "area": "Educación Física, Sociales"
+    }
+  },
+  "109": {
+    "piso": 1,
+    "manana": {
+      "grado": "8B",
+      "nombre": "Fabio Acosta Rivera",
+      "area": "Sociales"
+    },
+    "tarde": {
+      "grado": "4-D",
+      "nombre": "Zulaima Ayde Medina Mojica",
+      "area": "Matemáticas, Estadística"
+    }
+  },
+  "110": {
+    "piso": 1,
+    "manana": {
+      "grado": "9B",
+      "nombre": "Johan Fernando Vega Gomez",
+      "area": "Filosofía"
+    }
+  },
+  "111": {
+    "piso": 1,
+    "manana": {
+      "grado": "—",
+      "nombre": "Mayra Lizeth Gutierrez Fonseca",
+      "area": null
+    },
+    "tarde": {
+      "grado": "1-A",
+      "nombre": "Doris Marlen Plazas Mora",
+      "area": null
+    }
+  },
+  "112": {
+    "piso": 1,
+    "tarde": {
+      "grado": "1-B",
+      "nombre": "Claudia Patricia Cristancho Perez",
+      "area": null
+    },
+    "manana": {
+      "grado": "CR A",
+      "nombre": "Judit Xiomara Leon Pedraza",
+      "area": null
+    }
+  },
+  "113": {
+    "piso": 1,
+    "manana": {
+      "grado": "CR B",
+      "nombre": "Johana Nazareth Lopez Florez",
+      "area": null
+    },
+    "tarde": {
+      "grado": "1-C",
+      "nombre": "Samirna del Carmen Gonzalez V.",
+      "area": null
+    }
+  },
+  "114": {
+    "piso": 1,
+    "manana": {
+      "grado": "—",
+      "nombre": "Juan Jose Arias Giraldo",
+      "area": "Matemáticas"
+    },
+    "tarde": {
+      "grado": "1-D",
+      "nombre": "Mery Vastid Sánchez Velandia",
+      "area": null
+    }
+  },
+  "115": {
+    "piso": 1,
+    "manana": {
+      "grado": "—",
+      "nombre": "Criss Dahiana Laverde Torres",
+      "area": "Español"
+    },
+    "tarde": {
+      "grado": "2-A",
+      "nombre": "Dency Maria Torres Murillo",
+      "area": null
+    }
+  },
+  "116": {
+    "piso": 1,
+    "tarde": {
+      "grado": "2-B",
+      "nombre": "Ana Lizbeth Velandia Fuentes",
+      "area": null
+    },
+    "manana": {
+      "grado": "10A",
+      "nombre": "Diana Marcela Rodriguez Suarez",
+      "area": "Español"
+    }
+  },
+  "117": {
+    "piso": 1,
+    "tarde": {
+      "grado": "2-C",
+      "nombre": "Nelly Esmeralda Gutierrez Ceron",
+      "area": null
+    },
+    "manana": {
+      "grado": "9C",
+      "nombre": "Carlos Eduardo Ramirez Duarte",
+      "area": "Español"
+    }
+  },
+  "118": {
+    "piso": 1,
+    "manana": {
+      "grado": "7E",
+      "nombre": "Eliana Yulieth Cuervo Higuera",
+      "area": null
+    }
+  },
+  "201": {
+    "piso": 2,
+    "manana": {
+      "grado": "11B",
+      "nombre": "Diego Alfonso Avila Moreno",
+      "area": "Ética - Religión"
+    }
+  },
+  "203": {
+    "piso": 2,
+    "manana": {
+      "grado": "—",
+      "nombre": "Jose Alberto Silva Gil",
+      "area": "Ética - Religión"
+    },
+    "tarde": {
+      "grado": "5-A",
+      "nombre": "Gilma Ines Cely Avila",
+      "area": "Ética y Religión - Informática"
+    }
+  },
+  "204": {
+    "piso": 2,
+    "manana": {
+      "grado": "7D",
+      "nombre": "Fabian Alexander Morales Rodriguez",
+      "area": "Ética - Religión"
+    },
+    "tarde": {
+      "grado": "5-B",
+      "nombre": "Maria Mercedes Reyes Sanchez",
+      "area": "Sociales, Inglés, Artes"
+    }
+  },
+  "205": {
+    "piso": 2,
+    "manana": {
+      "grado": "6D",
+      "nombre": "Arcely Ortiz Gualdron",
+      "area": null
+    },
+    "tarde": {
+      "grado": "5-C",
+      "nombre": "Gonzalo Mendoza Rojas",
+      "area": "Matemáticas, Geometría, Estadística"
+    }
+  },
+  "206": {
+    "piso": 2,
+    "manana": {
+      "grado": "9A",
+      "nombre": "Rolando Enrique Acosta Perez",
+      "area": "Física"
+    },
+    "tarde": {
+      "grado": "5-D",
+      "nombre": "Camilo Murillo Asprilla",
+      "area": "Naturales, Educación Física"
+    }
+  },
+  "207": {
+    "piso": 2,
+    "manana": {
+      "grado": "11A",
+      "nombre": "Nancy Fabiola Chaparro Lopez",
+      "area": "Naturales - Química"
+    }
+  },
+  "209": {
+    "piso": 2,
+    "manana": {
+      "grado": "8C",
+      "nombre": "Felix Riaches Chaparro",
+      "area": "Artes"
+    }
+  },
+  "210": {
+    "piso": 2,
+    "manana": {
+      "grado": "7C",
+      "nombre": "Fabio Andres Ampudia Castillo",
+      "area": "C. Políticas - Sociales"
+    }
+  },
+  "211": {
+    "piso": 2,
+    "manana": {
+      "grado": "AC A",
+      "nombre": "Ana Elsa Sepulveda Caro",
+      "area": null
+    }
+  },
+  "212": {
+    "piso": 2,
+    "manana": {
+      "grado": "AC B",
+      "nombre": "Carolina Martinez Cardona",
+      "area": null
+    }
+  },
+  "213": {
+    "piso": 2,
+    "manana": {
+      "grado": "7A",
+      "nombre": "Marinelba Oropeza Hernandez",
+      "area": "Física - Matemáticas"
+    }
+  },
+  "214": {
+    "piso": 2,
+    "manana": {
+      "grado": "—",
+      "nombre": "Viviana Marcela Angel Paramo",
+      "area": "Matemáticas"
+    },
+    "tarde": null
+  },
+  "215": {
+    "piso": 2,
+    "manana": {
+      "grado": "10B",
+      "nombre": "Freddy Antonio Chacon Peña",
+      "area": "Matemáticas"
+    }
+  }
+}

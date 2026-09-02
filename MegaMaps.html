@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEGA MAPS — Megacolegio El Progreso</title>
+<link rel="stylesheet" href="style.css">
+
+<!-- PWA: permite "Agregar a pantalla de inicio" con ícono y pantalla completa -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0F1B3C">
+<link rel="icon" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MEGA MAPS">
+</head>
+<body>
+
+<div class="stage">
+  <div class="stage-label">MEGA MAPS · Prototipo interactivo</div>
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="topbar">
+      <img class="logo-badge" src="assets/escudo.png" alt="Escudo Megacolegio El Progreso">
+      <div class="brand">MEGA MAPS<small>MEGACOLEGIO EL PROGRESO · YOPAL</small></div>
+      <button class="home-btn" id="homeBtn" title="Volver al inicio">⌂</button>
+    </div>
+    <div class="screen" id="screen"></div>
+  </div>
+  <div class="code-note">100% HTML + CSS + JavaScript, sin dependencias. Corre entero en tu navegador — no llama a ningún servidor.</div>
+</div>
+
+<script src="nodos.js"></script>
+<script src="aristas.js"></script>
+<script src="sitios.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
