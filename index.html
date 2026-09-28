@@ -71,10 +71,6 @@ input.room-input:focus{border-color:var(--green);}
 .info-ic{width:34px;height:34px;border-radius:10px;background:#EEF1FB;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
 .info-txt{flex:1;} .info-txt small{display:block;color:var(--muted);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
 .info-txt strong{font-size:14.5px;color:var(--ink);}
-.estado-badge{font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:100px;white-space:nowrap;flex-shrink:0;}
-.badge-green{background:#E8F6ED;color:var(--green-dark);}
-.badge-amber{background:#FEF3CD;color:#996900;}
-.badge-red{background:#FDEAEA;color:#B91C1C;}
 .photo-step-card{width:100%;height:190px;border-radius:16px;overflow:hidden;position:relative;background:#EEF1FB;margin-bottom:10px;}
 .photo-step-img{width:100%;height:100%;object-fit:cover;display:block;}
 .photo-step-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);}
@@ -118,6 +114,12 @@ input.room-input:focus{border-color:var(--green);}
 @keyframes crestIn{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
 .feature-chips{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:26px;animation:subeAparece .5s ease .32s both;}
 .feature-chips span{font-size:10.5px;font-weight:700;color:var(--navy-2);background:#EEF1FB;border:1px solid var(--line);padding:5px 9px;border-radius:100px;white-space:nowrap;}
+.navitem{flex-direction:row;justify-content:center;gap:7px;font-size:13px;padding:8px 12px;}
+  /* La vista de cada zona aprovecha el espacio del computador sin cambiar móvil. */
+  .phone:has(.zona-imagen){width:min(100%,1000px);height:calc(100vh - 48px);}
+  .phone:has(.zona-imagen) .screen{padding:32px 8%;}
+  .zona-imagen{max-width:820px;margin:0 auto 22px;}
+  .zona-imagen img{height:min(58vh,520px);object-fit:contain;background:#fff;}
 .land-btn{display:flex;align-items:center;justify-content:center;gap:8px;animation:subeAparece .45s ease both;}
 @keyframes subeAparece{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .code-note{max-width:720px;color:#c8cfea;font-size:13px;line-height:1.6;text-align:center;}
@@ -127,6 +129,13 @@ input.room-input:focus{border-color:var(--green);}
 .foto-manage-txt{flex:1;} .foto-manage-txt strong{font-size:13px;color:var(--ink);display:block;}
 .foto-manage-txt small{color:var(--muted);font-size:11px;}
 .btn-foto-upload{font-size:12px;font-weight:700;color:var(--green-dark);background:#E8F6ED;border:1px solid #B9E4C8;padding:6px 11px;border-radius:9px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.foto-route-step{display:flex;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);}
+.foto-route-step:last-child{border-bottom:none;}
+.foto-route-preview{width:72px;height:54px;border-radius:9px;overflow:hidden;background:#EEF1FB;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:24px;}
+.foto-route-preview img{width:100%;height:100%;object-fit:cover;}
+.foto-route-copy{flex:1;min-width:0;}
+.foto-route-copy strong{display:block;font-size:13px;color:var(--ink);}
+.foto-route-copy small{display:block;color:var(--muted);font-size:11px;line-height:1.35;margin-top:2px;}
 .mini-btn{width:26px;height:26px;border-radius:7px;background:#fff;border:1px solid var(--line);font-size:11px;cursor:pointer;flex-shrink:0;margin-left:4px;color:var(--navy-2);}
 .mini-btn:hover{border-color:var(--green);} .mini-btn:disabled{opacity:.3;cursor:not-allowed;}
 .admin-row{gap:8px;}
@@ -140,6 +149,70 @@ input.room-input:focus{border-color:var(--green);}
 .zona-descripcion{background:#fff;border-radius:14px;padding:14px;border:1px solid var(--line);margin-bottom:14px;}
 .zona-descripcion h3{font-size:16px;color:var(--ink);margin:0 0 8px;}
 .zona-descripcion p{color:var(--muted);font-size:13px;line-height:1.5;margin:0;}
+
+/* Vista de escritorio: conserva todas las funciones de la app, pero usa
+   el espacio horizontal disponible en pantallas grandes. */
+@media (min-width:769px){
+  body{padding:28px;background:radial-gradient(circle at 16% 0%,#2a4b8f 0%,transparent 31%),radial-gradient(circle at 86% 100%,#126442 0%,transparent 27%),linear-gradient(135deg,#07142f 0%,#0b1c42 52%,#07142f 100%);}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:radial-gradient(rgba(255,255,255,.75) .65px,transparent .65px);background-size:18px 18px;}
+  .stage{width:min(100%,1440px);height:calc(100dvh - 56px);min-height:680px;gap:10px;position:relative;z-index:1;}
+  .stage-label{align-self:flex-start;padding-left:10px;color:#cfdbff;text-shadow:0 1px 12px rgba(0,0,0,.35);}
+  .phone{width:100%;height:100%;border:1px solid rgba(190,208,255,.28);border-radius:28px;box-shadow:0 34px 80px -28px rgba(0,0,0,.78),0 0 0 1px rgba(255,255,255,.07) inset;background:#f5f7fc;}
+  .notch{display:none;}
+  .topbar{padding:16px 32px;background:linear-gradient(100deg,#0b1738 0%,#162f67 55%,#0d7045 140%);box-shadow:0 8px 22px -16px rgba(4,12,35,.85);}
+  .logo-badge{width:42px;height:42px;border-color:rgba(255,255,255,.72);box-shadow:0 4px 12px rgba(0,0,0,.2);}
+  .brand{font-size:18px;letter-spacing:.035em;}
+  .brand small{font-size:10px;letter-spacing:.12em;}
+  .home-btn{width:38px;height:38px;font-size:19px;border-radius:12px;transition:transform .15s ease,background .15s ease;}
+  .home-btn:hover{transform:translateY(-2px);}
+  .screen{padding:34px clamp(36px,5vw,92px);background:linear-gradient(180deg,#f8faff 0%,#eef3fb 100%);}
+  .screen > .fade{max-width:1180px;margin-inline:auto;}
+  .search-title{font-size:28px;letter-spacing:-.02em;}
+  .search-sub{font-size:14.5px;max-width:760px;}
+  .btn{width:auto;min-width:190px;padding:14px 22px;border-radius:13px;box-shadow:none;}
+  .btn-primary{box-shadow:0 12px 22px -13px rgba(20,145,75,.8);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 28px -14px rgba(20,145,75,.76);}
+  .btn-ghost{background:rgba(255,255,255,.9);}
+  .card{border-radius:22px;padding:24px;box-shadow:0 16px 34px -24px rgba(20,30,70,.35);background:rgba(255,255,255,.9);}
+  .menu-item{padding:17px 18px;border-color:#dbe4f4;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease,background .16s ease;}
+  .menu-item:hover{transform:translateY(-3px);border-color:#9ecfb2;background:#fbfffc;box-shadow:0 15px 25px -20px rgba(20,58,75,.55);}
+  .menu-ic{width:46px;height:46px;border-radius:14px;font-size:21px;}
+  .menu-txt{font-size:15px;}
+  .location-pill{width:max-content;padding:11px 15px;box-shadow:0 8px 16px -14px rgba(21,128,69,.7);}
+  input.room-input{font-size:24px;padding:16px 18px;max-width:720px;background:#fff;box-shadow:0 8px 18px -17px rgba(16,36,78,.7);}
+  .chip-row{margin-bottom:22px;}
+  .chip{padding:8px 14px;background:rgba(255,255,255,.85);}
+  .map-canvas-wrap{max-width:1080px;margin-inline:auto;border-radius:22px;box-shadow:0 18px 38px -26px rgba(16,36,78,.45);}
+  .photo-step-card{height:340px;border-radius:22px;box-shadow:0 18px 34px -24px rgba(16,36,78,.42);}
+  .arrow-scene{max-width:820px;margin-inline:auto;}
+  .bottomnav{margin:30px clamp(-92px,-5vw,-36px) -34px;padding:12px max(28px,5vw) 15px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);box-shadow:0 -12px 26px -26px rgba(11,27,60,.75);}
+  .navitem{font-size:11px;border-radius:12px;padding:6px 10px;transition:background .15s ease,color .15s ease;}
+  .navitem:hover,.navitem.active{background:#e8f6ed;}
+  .navitem .navic{font-size:20px;}
+
+  /* Portada con presencia de aplicación de escritorio. */
+  .screen > .fade:has(.logo-wrap){max-width:920px;min-height:100%;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;column-gap:64px;}
+  .screen > .fade:has(.logo-wrap) .logo-wrap{grid-row:span 2;width:min(360px,100%);max-width:100%;margin:auto;filter:drop-shadow(0 20px 20px rgba(17,43,92,.18));}
+  .screen > .fade:has(.logo-wrap) .land-btn{width:100%;margin:0 !important;min-height:58px;font-size:16px;}
+
+  /* Selección de origen y panel administrativo como tarjetas de escritorio. */
+  .screen > .fade:has([data-sitio]){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+  .screen > .fade:has([data-sitio]) .search-title,.screen > .fade:has([data-sitio]) .search-sub{grid-column:1 / -1;}
+  .screen > .fade:has([data-sitio]) .menu-item{margin:0;min-height:104px;align-items:center;}
+  .screen > .fade:has([data-go="adminSalones"]){max-width:900px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+  .screen > .fade:has([data-go="adminSalones"]) .search-title,.screen > .fade:has([data-go="adminSalones"]) .search-sub,.screen > .fade:has([data-go="adminSalones"]) .btn{grid-column:1 / -1;}
+  .screen > .fade:has([data-go="adminSalones"]) .menu-item{margin:0 !important;min-height:118px;}
+
+  .screen > .fade:has(#roomInput){max-width:820px;padding:34px;border:1px solid rgba(210,220,239,.9);border-radius:26px;background:rgba(255,255,255,.76);box-shadow:0 22px 45px -34px rgba(16,36,78,.5);}
+  .screen > .fade:has(#roomInput) .btn{min-width:260px;}
+  .screen > .fade:has(#pinInput),.screen > .fade:has(#fNumero){max-width:700px;}
+
+  /* La galería administrativa pasa a dos columnas sin alterar su orden ni sus controles. */
+  .card:has(.foto-manage-item){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 26px;align-content:start;}
+  .card:has(.foto-manage-item) .foto-manage-item{padding:14px 0;}
+  .foto-manage-thumb{width:56px;height:56px;border-radius:14px;}
+  .btn-foto-upload{padding:8px 12px;border-radius:10px;}
+}
 </style>
 </head>
 <body>
@@ -154,7 +227,7 @@ input.room-input:focus{border-color:var(--green);}
     </div>
     <div class="screen" id="screen"></div>
   </div>
-  <div class="code-note">100% HTML + CSS + JavaScript · Sin dependencias externas</div>
+  <div class="code-note">HTML + CSS + JavaScript ·</div>
 </div>
 
 <script>
@@ -170,21 +243,11 @@ const NODOS = {
   biblioteca:     { label:"Biblioteca",        x:0.48, y:0.90, piso:2 },
   restaurante:      { label:"Restaurante",           x:0.40, y:0.10, piso:1 },
   parqueadero:      { label:"Parqueadero",           x:0.08, y:0.05, piso:1 },
-  sala_juegos:      { label:"Sala de juegos",        x:0.06, y:0.16, piso:1 },
   sala_profesores:  { label:"Sala de profesores",    x:0.12, y:0.17, piso:1 },
-  oficina_inclusion:{ label:"Oficina de inclusión",  x:0.16, y:0.18, piso:1 },
   escaleras_izq:    { label:"Escaleras izquierda",   x:0.10, y:0.34, piso:1 },
   escaleras_principales:{ label:"Escaleras principales", x:0.42, y:0.55, piso:1 },
-  jardin:           { label:"Jardín",                x:0.90, y:0.42, piso:1 },
   pasillo_der:      { label:"Pasillo derecho",       x:0.90, y:0.30, piso:1 },
   pasillo_piso2:    { label:"Pasillo Nivel 2",       x:0.42, y:0.86, piso:2 },
-  salon_118:{ label:"Salón 118", x:0.65, y:0.13, piso:1 },
-  salon_117:{ label:"Salón 117", x:0.70, y:0.14, piso:1 },
-  salon_116:{ label:"Salón 116", x:0.75, y:0.15, piso:1 },
-  salon_114:{ label:"Salón 114", x:0.84, y:0.17, piso:1 },
-  salon_113:{ label:"Salón 113", x:0.89, y:0.18, piso:1 },
-  salon_112:{ label:"Salón 112", x:0.94, y:0.19, piso:1 },
-  salon_111:{ label:"Salón 111", x:0.98, y:0.20, piso:1 },
   salon_101:{ label:"Salón 101", x:0.14, y:0.56, piso:1 },
   salon_102:{ label:"Salón 102", x:0.19, y:0.59, piso:1 },
   salon_103:{ label:"Salón 103", x:0.24, y:0.62, piso:1 },
@@ -195,13 +258,22 @@ const NODOS = {
   salon_108:{ label:"Salón 108", x:0.58, y:0.76, piso:1 },
   salon_109:{ label:"Salón 109", x:0.63, y:0.78, piso:1 },
   salon_110:{ label:"Salón 110", x:0.68, y:0.80, piso:1 },
+  salon_111:{ label:"Salón 111", x:0.98, y:0.20, piso:1 },
+  salon_112:{ label:"Salón 112", x:0.94, y:0.19, piso:1 },
+  salon_113:{ label:"Salón 113", x:0.89, y:0.18, piso:1 },
+  salon_114:{ label:"Salón 114", x:0.84, y:0.17, piso:1 },
   salon_115:{ label:"Salón 115", x:0.75, y:0.82, piso:1 },
+  salon_116:{ label:"Salón 116", x:0.75, y:0.15, piso:1 },
+  salon_117:{ label:"Salón 117", x:0.70, y:0.14, piso:1 },
+  salon_118:{ label:"Salón 118", x:0.65, y:0.13, piso:1 },
   salon_201:{ label:"Salón 201", x:0.10, y:0.92, piso:2 },
+  salon_202:{ label:"Salón 202", x:0.14, y:0.92, piso:2 },
   salon_203:{ label:"Salón 203", x:0.17, y:0.92, piso:2 },
   salon_204:{ label:"Salón 204", x:0.24, y:0.92, piso:2 },
   salon_205:{ label:"Salón 205", x:0.31, y:0.92, piso:2 },
   salon_206:{ label:"Salón 206", x:0.38, y:0.92, piso:2 },
   salon_207:{ label:"Salón 207", x:0.55, y:0.92, piso:2 },
+  salon_208:{ label:"Salón 208", x:0.59, y:0.92, piso:2 },
   salon_209:{ label:"Salón 209", x:0.62, y:0.92, piso:2 },
   salon_210:{ label:"Salón 210", x:0.69, y:0.92, piso:2 },
   salon_211:{ label:"Salón 211", x:0.76, y:0.92, piso:2 },
@@ -212,28 +284,28 @@ const NODOS = {
 };
 
 const ARISTAS = [
-  ["parqueadero","sala_juegos"],["sala_juegos","sala_profesores"],
-  ["sala_profesores","oficina_inclusion"],["coordinacion","cafeteria"],
+  ["parqueadero","sala_profesores"],
+  ["sala_profesores","coordinacion"],["coordinacion","cafeteria"],
   ["cafeteria","restaurante"],["restaurante","entrada"],
   ["entrada","salon_118"],["salon_118","salon_117"],["salon_117","salon_116"],
   ["salon_116","pasillo_der"],["pasillo_der","salon_114"],["salon_114","salon_113"],
   ["salon_113","salon_112"],["salon_112","salon_111"],
-  ["pasillo_der","jardin"],["pasillo_der","transicion"],
-  ["sala_juegos","escaleras_izq"],
+  ["transicion"],
   ["coordinacion","cancha_central"],["cancha_central","escaleras_principales"],
-  ["escaleras_izq","salon_101"],["salon_101","salon_102"],["salon_102","salon_103"],
+  ["salon_101"],["salon_101","salon_102"],["salon_102","salon_103"],
   ["salon_103","salon_104"],["salon_104","salon_105"],["salon_105","salon_106"],
   ["salon_106","salon_107"],["salon_107","escaleras_principales"],
   ["escaleras_principales","salon_108"],["salon_108","salon_109"],
   ["salon_109","salon_110"],["salon_110","salon_115"],
   ["escaleras_principales","pasillo_piso2"],
   ["pasillo_piso2","biblioteca"],["biblioteca","salon_207"],
-  ["pasillo_piso2","salon_201"],["salon_201","salon_203"],["salon_203","salon_204"],
+  ["pasillo_piso2","salon_201"],["salon_201","salon_202"],["salon_202","salon_203"],["salon_203","salon_204"],
   ["salon_204","salon_205"],["salon_205","salon_206"],["salon_206","salon_207"],
-  ["salon_207","salon_209"],["salon_209","salon_210"],["salon_210","salon_211"],
+  ["salon_207","salon_208"],["salon_208","salon_209"],["salon_209","salon_210"],["salon_210","salon_211"],
   ["salon_211","salon_212"],["salon_212","salon_213"],["salon_213","salon_214"],
   ["salon_214","salon_215"],
 ];
+
 const GRAFO = {};
 Object.keys(NODOS).forEach(n => GRAFO[n] = []);
 ARISTAS.forEach(([a,b]) => {
@@ -280,11 +352,13 @@ const DATOS_SALONES_BASE = {
   "117":{piso:1, tarde:{grado:"2-C", nombre:"Nelly Esmeralda Gutierrez Ceron", area:null, horario:"1:00 p.m. – 6:00 p.m.", estado:"disponible"}, manana:{grado:"9C", nombre:"Carlos Eduardo Ramirez Duarte", area:"Español", horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}},
   "118":{piso:1, manana:{grado:"7E", nombre:"Eliana Yulieth Cuervo Higuera", area:null, horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}},
   "201":{piso:2, manana:{grado:"11B", nombre:"Diego Alfonso Avila Moreno", area:"Ética – Religión", horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}},
+  "202":{piso:2, manana:null, tarde:null},
   "203":{piso:2, manana:{grado:"—", nombre:"Jose Alberto Silva Gil", area:"Ética – Religión", horario:"7:00 a.m. – 12:00 m.", estado:"en_clase"}, tarde:{grado:"5-A", nombre:"Gilma Ines Cely Avila", area:"Ética y Religión – Informática", horario:"1:00 p.m. – 6:00 p.m.", estado:"disponible"}},
   "204":{piso:2, manana:{grado:"7D", nombre:"Fabian Alexander Morales Rodriguez", area:"Ética – Religión", horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}, tarde:{grado:"5-B", nombre:"Maria Mercedes Reyes Sanchez", area:"Sociales, Inglés, Artes", horario:"1:00 p.m. – 6:00 p.m.", estado:"disponible"}},
   "205":{piso:2, manana:{grado:"6D", nombre:"Arcely Ortiz Gualdron", area:null, horario:"7:00 a.m. – 12:00 m.", estado:"en_clase"}, tarde:{grado:"5-C", nombre:"Gonzalo Mendoza Rojas", area:"Matemáticas, Geometría, Estadística", horario:"1:00 p.m. – 6:00 p.m.", estado:"disponible"}},
   "206":{piso:2, manana:{grado:"9A", nombre:"Rolando Enrique Acosta Perez", area:"Física", horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}, tarde:{grado:"5-D", nombre:"Camilo Murillo Asprilla", area:"Naturales, Educación Física", horario:"1:00 p.m. – 6:00 p.m.", estado:"disponible"}},
   "207":{piso:2, manana:{grado:"11A", nombre:"Nancy Fabiola Chaparro Lopez", area:"Naturales – Química", horario:"7:00 a.m. – 12:00 m.", estado:"en_clase"}},
+  "208":{piso:2, manana:null, tarde:null},
   "209":{piso:2, manana:{grado:"8C", nombre:"Felix Riaches Chaparro", area:"Artes", horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}},
   "210":{piso:2, manana:{grado:"7C", nombre:"Fabio Andres Ampudia Castillo", area:"C. Políticas – Sociales", horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}},
   "211":{piso:2, manana:{grado:"AC A", nombre:"Ana Elsa Sepulveda Caro", area:null, horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}},
@@ -293,6 +367,12 @@ const DATOS_SALONES_BASE = {
   "214":{piso:2, manana:{grado:"—", nombre:"Viviana Marcela Angel Paramo", area:"Matemáticas", horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}},
   "215":{piso:2, manana:{grado:"10B", nombre:"Freddy Antonio Chacon Peña", area:"Matemáticas", horario:"7:00 a.m. – 12:00 m.", estado:"disponible"}},
 };
+
+const ORDEN_FOTOS_RUTAS = [
+  "entrada", "cafeteria", "coordinacion", "cancha_central", "transicion",
+  "biblioteca",
+  ...["101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "201", "202", "203", "204", "205", "206", "207", "208", "209", "210", "211", "212", "213", "214", "215"].map(numero => `salon_${numero}`),
+];
 
 const DOCENTES_ITINERANTES = [
   { nombre:"Guido Arnoldo Rodriguez Torrente", area:"Informática (Inf 1)", nota:"Sin salón fijo" },
@@ -305,12 +385,13 @@ const DOCENTES_ITINERANTES = [
 const STORAGE_KEY     = "megamaps_salones_v3";
 const RUTAS_KEY       = "megamaps_rutas_v1";
 const FOTOS_KEY       = "megamaps_fotos_v1";
-const ESTADOS_KEY     = "megamaps_estados_v1";
+const FOTOS_RUTA_KEY  = "megamaps_fotos_ruta_v1";
 
 const LUGARES_ELIMINADOS = [
   "biblioteca","taller_manualidades","laboratorio2","almacen_pedagogico",
   "enfermeria","rectoria","sala_academicos","aula_multiple","aula_ingles",
-  "aula_class","idi_clase","idi_lounge","banos_116"
+  "aula_class","idi_clase","idi_lounge","banos_116",
+  "oficina_inclusion","sala_juegos","jardin"
 ];
 
 function cargarSalones(){
@@ -324,6 +405,27 @@ function cargarSalones(){
     });
   }
   let dirty=false;
+  Object.entries(DATOS_SALONES_BASE).forEach(([num,d])=>{
+    if(!data[num]){
+      data[num]={ nombre:`Salón ${num}`, nodeId:`salon_${num}`, piso:d.piso,
+        manana:d.manana||null, tarde:d.tarde||null };
+      dirty=true;
+    }
+  });
+  Object.values(data).forEach(salon=>{
+    ['manana','tarde'].forEach(jornada=>{
+      const docente=salon?.[jornada];
+      if(!docente||typeof docente!=='object') return;
+      if(Object.prototype.hasOwnProperty.call(docente,'horario')){
+        delete docente.horario;
+        dirty=true;
+      }
+      if(Object.prototype.hasOwnProperty.call(docente,'estado')){
+        delete docente.estado;
+        dirty=true;
+      }
+    });
+  });
   LUGARES_ELIMINADOS.forEach(id=>{ if(data[id]){ delete data[id]; dirty=true; } });
   if(dirty) guardarSalones(data);
   return data;
@@ -336,18 +438,52 @@ function guardarRutas(data){ try{ localStorage.setItem(RUTAS_KEY,JSON.stringify(
 function cargarFotos(){ try{ const g=localStorage.getItem(FOTOS_KEY); if(g) return JSON.parse(g); }catch(e){} return {}; }
 function guardarFotos(data){ try{ localStorage.setItem(FOTOS_KEY,JSON.stringify(data)); }catch(e){} }
 function getFoto(nodeId){ return FOTOS[nodeId]||null; }
+function cargarFotosRuta(){ try{ const g=localStorage.getItem(FOTOS_RUTA_KEY); if(g) return JSON.parse(g); }catch(e){} return {}; }
+function guardarFotosRuta(data){ try{ localStorage.setItem(FOTOS_RUTA_KEY,JSON.stringify(data)); }catch(e){} }
+function claveFotoRuta(origenId, destinoNodeId, pasoNodeId){ return `${origenId}__${destinoNodeId}__${pasoNodeId}`; }
+function getFotoRuta(origenId, destinoNodeId, pasoNodeId){
+  return FOTOS_RUTA[claveFotoRuta(origenId,destinoNodeId,pasoNodeId)] || getFoto(pasoNodeId) || null;
+}
 
-function cargarEstados(){ try{ const g=localStorage.getItem(ESTADOS_KEY); if(g) return JSON.parse(g); }catch(e){} return {}; }
-function guardarEstados(data){ try{ localStorage.setItem(ESTADOS_KEY,JSON.stringify(data)); }catch(e){} }
-function getEstado(salon,jornada){
-  const k=`${salon}_${jornada}`;
-  return ESTADOS[k]||null;
+function obtenerDirectorioDocentes(){
+  const docentes=Object.entries(SALONES).flatMap(([numero,salon])=>
+    ['manana','tarde']
+      .filter(jornada=>salon[jornada]?.nombre)
+      .map(jornada=>({
+        nombre:salon[jornada].nombre,
+        grado:salon[jornada].grado&&salon[jornada].grado!=='—'
+          ? salon[jornada].grado
+          : 'Sin grado registrado',
+        salon:salon.nombre,
+      }))
+  );
+
+  DOCENTES_ITINERANTES.forEach(docente=>{
+    docentes.push({
+      nombre:docente.nombre,
+      grado:'Sin grado asignado',
+      salon:'Sin salón fijo',
+    });
+  });
+
+  return docentes.sort((a,b)=>
+    a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'})||
+    a.grado.localeCompare(b.grado,'es',{sensitivity:'base'})
+  );
 }
 
 let SALONES = cargarSalones();
 let RUTAS_PERSONALIZADAS = cargarRutas();
 let FOTOS = cargarFotos();
-let ESTADOS = cargarEstados();
+let FOTOS_RUTA = cargarFotosRuta();
+let sesionAdminServidor = false;
+let cargaRutasServidor = null;
+let cargaSalonesServidor = null;
+let servidorRutasDisponible = false;
+let estadoRutasServidor = location.protocol==='file:'
+  ? 'Modo archivo: las rutas editadas solo se guardan en este navegador.'
+  : 'Conectando con las rutas compartidas de SQLite...';
+let estadoGuardarSalones='Los cambios de salones y docentes se guardan en este navegador.';
 
 function claveRuta(o,d){ return `${o}__${d}`; }
 function obtenerRutaGuardada(clave){
@@ -355,6 +491,119 @@ function obtenerRutaGuardada(clave){
   if(!r) return null;
   if(Array.isArray(r)) return {camino:r, etiquetas:null};
   return r;
+}
+
+function sincronizarRutasServidor(){
+  if(location.protocol==='file:') return Promise.resolve();
+  if(cargaRutasServidor) return cargaRutasServidor;
+
+  cargaRutasServidor=(async()=>{
+    try{
+      const respuesta=await fetch('api.php?action=routes',{
+        headers:{'Accept':'application/json'},
+        credentials:'same-origin',
+      });
+      const datos=await respuesta.json();
+      if(!respuesta.ok) throw new Error(datos.error||'El servidor no pudo cargar las rutas.');
+      if(!datos.rutas||typeof datos.rutas!=='object'||Array.isArray(datos.rutas)){
+        throw new Error('El servidor devolvió rutas con un formato inválido.');
+      }
+
+      Object.assign(RUTAS_PERSONALIZADAS,datos.rutas);
+      guardarRutas(RUTAS_PERSONALIZADAS);
+      servidorRutasDisponible=true;
+      estadoRutasServidor='Rutas compartidas conectadas a SQLite.';
+    }catch(error){
+      console.warn('No se pudieron sincronizar las rutas compartidas:',error);
+      estadoRutasServidor='No se pudo conectar a SQLite. Las rutas nuevas quedarán solo en este navegador.';
+    }
+  })();
+  return cargaRutasServidor;
+}
+
+function sincronizarSalonesServidor(){
+  if(location.protocol==='file:') return Promise.resolve();
+  if(cargaSalonesServidor) return cargaSalonesServidor;
+
+  cargaSalonesServidor=(async()=>{
+    try{
+      const respuesta=await fetch('api.php?action=salones',{
+        headers:{'Accept':'application/json'},
+        credentials:'same-origin',
+      });
+      const datos=await respuesta.json();
+      if(!respuesta.ok) throw new Error(datos.error||'El servidor no pudo cargar salones y docentes.');
+      if(!datos.salones||typeof datos.salones!=='object'||Array.isArray(datos.salones)){
+        throw new Error('El servidor devolvió datos de salones con un formato inválido.');
+      }
+      if(Object.keys(datos.salones).length){
+        SALONES=datos.salones;
+        Object.values(SALONES).forEach(salon=>{
+          ['manana','tarde'].forEach(jornada=>{
+            const docente=salon?.[jornada];
+            if(!docente) return;
+            delete docente.horario;
+            delete docente.estado;
+          });
+        });
+        guardarSalones(SALONES);
+      }
+    }catch(error){
+      console.warn('No se pudieron sincronizar los salones y docentes:',error);
+      estadoGuardarSalones=`No se pudieron cargar los datos compartidos: ${error.message}`;
+    }
+  })();
+  return cargaSalonesServidor;
+}
+
+async function guardarRutaServidor(clave,ruta){
+  if(location.protocol==='file:'){
+    return 'Guardada en este navegador. Abre MegaMaps desde XAMPP para compartirla entre navegadores.';
+  }
+  if(!sesionAdminServidor){
+    return 'Guardada en este navegador, pero no en SQLite: no se inició sesión en el servidor.';
+  }
+
+  try{
+    const respuesta=await fetch('api.php?action=routes',{
+      method:'POST',
+      credentials:'same-origin',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({clave,ruta}),
+    });
+    const datos=await respuesta.json();
+    if(!respuesta.ok) throw new Error(datos.error||'El servidor rechazó la ruta.');
+    estadoRutasServidor='Rutas compartidas conectadas a SQLite.';
+    return 'Ruta guardada en SQLite y compartida entre navegadores.';
+  }catch(error){
+    console.error('No se pudo guardar la ruta en SQLite:',error);
+    estadoRutasServidor=`Error al guardar en SQLite: ${error.message}`;
+    return `La ruta quedó guardada solo en este navegador. No se pudo sincronizar con SQLite: ${error.message}`;
+  }
+}
+
+async function guardarSalonesServidor(salones){
+  if(location.protocol==='file:'){
+    return 'Guardados solo en este navegador. Usa XAMPP para compartir salones y docentes.';
+  }
+  if(!sesionAdminServidor){
+    return 'Guardados solo en este navegador; inicia sesión en el servidor para compartirlos.';
+  }
+
+  try{
+    const respuesta=await fetch('api.php?action=salones',{
+      method:'POST',
+      credentials:'same-origin',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({salones}),
+    });
+    const datos=await respuesta.json();
+    if(!respuesta.ok) throw new Error(datos.error||'El servidor rechazó los datos.');
+    return 'Salones y docentes guardados en SQLite y compartidos entre navegadores.';
+  }catch(error){
+    console.error('No se pudieron guardar salones y docentes en SQLite:',error);
+    return `Guardados solo en este navegador. No se pudo sincronizar con SQLite: ${error.message}`;
+  }
 }
 
 // ═══════════════════════════════════════
@@ -422,14 +671,6 @@ function combinarPasos(camino, etiquetas){
   });
 }
 
-function estadoBadge(estado){
-  const map={ disponible:{cls:'badge-green',txt:'Disponible'},
-               en_clase:{cls:'badge-amber',txt:'En clase'},
-               no_disponible:{cls:'badge-red',txt:'No disponible'} };
-  const b=map[estado]||map.disponible;
-  return `<span class="estado-badge ${b.cls}">${b.txt}</span>`;
-}
-
 let extPiso1=0, extPiso2=0;
 function crearNodoParaSalonNuevo(numero,piso){
   const id=`salon_${numero}`;
@@ -450,13 +691,17 @@ let state = {
   pasos:null, pasoActual:0,
   zonaSeleccionada:null,
   adminEditando:null,
+  adminFotosSalon:null,
+  adminFotosOrigen:null,
+  adminFotosCamino:null,
   adminRutaSalon:null, adminRutaOrigen:null,
   adminRutaCamino:null, adminRutaEtiquetas:null,
-  adminRutaSnapshot:null, adminRutaEditando:false,
+  adminRutaSnapshot:null, adminRutaEditando:false, estadoGuardarRuta:'',
 };
 
 const screenEl = document.getElementById('screen');
 const homeBtn  = document.getElementById('homeBtn');
+let revisionNavegacion=0;
 homeBtn.addEventListener('click', ()=> go('landing'));
 
 function render(){
@@ -464,7 +709,114 @@ function render(){
   homeBtn.classList.toggle('hidden', state.view==='landing');
   attachHandlers(state.view);
 }
-function go(view){ state.view=view; render(); }
+function go(view){
+  const revision=++revisionNavegacion;
+  if('speechSynthesis' in window) window.speechSynthesis.cancel();
+  if(view==='mapa'&&location.protocol!=='file:'){
+    sincronizarRutasServidor().then(()=>{
+      if(revision!==revisionNavegacion) return;
+      state.view=view;
+      render();
+    });
+    return;
+  }
+  state.view=view;
+  render();
+}
+
+function hablar(texto){
+  if(!('speechSynthesis' in window)){
+    return {ok:false,mensaje:'La lectura en voz alta no está disponible en este navegador.'};
+  }
+  window.speechSynthesis.cancel();
+  const mensaje=new SpeechSynthesisUtterance(texto);
+  mensaje.lang='es-CO';
+  mensaje.rate=0.9;
+  mensaje.pitch=1.08;
+  const vocesEspanol=window.speechSynthesis.getVoices()
+    .filter(voz=>voz.lang.toLowerCase().startsWith('es'));
+  const indiciosVozFemenina=/female|mujer|helena|sabina|paulina|laura|monica|mónica|lucia|lucía|elena|sofia|sofía|carmen|zira|eva|penelope|penélope/i;
+  const vozFemenina=vocesEspanol.find(voz=>indiciosVozFemenina.test(voz.name));
+  const vozColombiana=vocesEspanol.find(voz=>voz.lang.toLowerCase()==='es-co');
+  const vozLatinoamericana=vocesEspanol.find(voz=>
+    /^(es-mx|es-us|es-419|es-ar|es-cl|es-co|es-pe|es-ve)/i.test(voz.lang)
+  );
+  mensaje.voice=vozFemenina||vozColombiana||vozLatinoamericana||vocesEspanol[0]||null;
+  window.speechSynthesis.speak(mensaje);
+  return {
+    ok:true,
+    mensaje:vozFemenina
+      ? `Leyendo con voz femenina: ${vozFemenina.name}.`
+      : 'Leyendo en español. La voz femenina depende de las voces instaladas en tu dispositivo.',
+  };
+}
+
+function textoAnimadoDelPaso(indice,total,destino,instruccion){
+  if(indice===0) return `¡Vamos juntos! Para llegar a ${destino}, ${instruccion.toLocaleLowerCase('es-CO')} Escucha el siguiente paso cuando estés listo.`;
+  if(indice===total-1) return `¡Excelente, último paso! ${instruccion} ¡Lo lograste!`;
+  if(indice%3===0) return `¡Vas muy bien! Ahora, ${instruccion.toLocaleLowerCase('es-CO')} Pulsa siguiente cuando hayas llegado a ese punto.`;
+  return `Sigue así. ${instruccion} Cuando estés listo, escucha el próximo paso.`;
+}
+
+function textoAnimadoDeRuta(origen,destino,pasos){
+  const instrucciones=pasos.map((paso,indice)=>{
+    const indicacion=`Paso ${indice+1}: ${paso.txt}`;
+    return indice>0&&indice%3===0
+      ? `¡Vas muy bien! Continúa. ${indicacion}`
+      : indicacion;
+  });
+  return `¡Vamos juntos! Empezamos en ${origen} y llegaremos a ${destino}. Escucha cada indicación y avanza a tu ritmo. ${instrucciones.join(' ')} ¡Excelente trabajo, llegaste a tu destino!`;
+}
+function responderConsultaVoz(consulta){
+  const texto=consulta.trim();
+  const normalizada=normalizar(texto);
+  if(!normalizada) return 'No alcancé a entender la consulta. Puedes preguntar por un salón, profesor o zona del colegio.';
+
+  const numeroSalon=normalizada.match(/(?:salon|aula)\s*(\d{3})/)?.[1]
+    || ( /^\d{3}$/.test(normalizada) ? normalizada : null );
+  if(numeroSalon&&SALONES[numeroSalon]){
+    const salon=SALONES[numeroSalon];
+    const docentes=['manana','tarde']
+      .map(jornada=>salon[jornada])
+      .filter(Boolean)
+      .map(docente=>`${docente.nombre}${docente.grado&&docente.grado!=='—'?`, grado ${docente.grado}`:''}`);
+    let respuesta=`El salón ${numeroSalon} está en el piso ${salon.piso}.`;
+    if(docentes.length) respuesta+=` Tiene asignado: ${docentes.join(' y ')}.`;
+    if(state.origenId){
+      const camino=bfsPath(state.origenId,salon.nodeId);
+      if(camino){
+        const guardado=obtenerRutaGuardada(claveRuta(state.origenId,salon.nodeId));
+        const pasos=combinarPasos(camino,guardado?.etiquetas);
+        respuesta+=` Para llegar desde ${state.origenLabel}: ${pasos.map(p=>p.txt).join(' ')}`;
+      }
+    }else{
+      respuesta+=' Selecciona primero un lugar de inicio para escuchar la ruta paso a paso.';
+    }
+    return respuesta;
+  }
+
+  const zonasCoincidentes=SITIOS.filter(zona=>
+    normalizada.includes(normalizar(zona.label))
+    || (zona.id==='cafeteria'&&normalizada.includes('cafeteria'))
+  );
+  if(zonasCoincidentes.length){
+    const zona=zonasCoincidentes[0];
+    return `${zona.label}: ${zona.desc}`;
+  }
+
+  const directorio=obtenerDirectorioDocentes();
+  const docente=directorio.find(persona=>normalizada.includes(normalizar(persona.nombre)));
+  if(docente){
+    return `${docente.nombre} está asignado al ${docente.grado}, en ${docente.salon}.`;
+  }
+
+  const solicitudLaboratorio=normalizada.includes('laboratorio')||normalizada.includes('lab ');
+  if(solicitudLaboratorio){
+    return 'No tengo registrada la ubicación de un laboratorio en el mapa actual de MEGA MAPS. Las zonas registradas son Entrada Principal, Cafetería, Transición, Coordinación y Biblioteca.';
+  }
+
+  return 'No encontré ese lugar en la información de MEGA MAPS. Puedes preguntar por un salón del 101 al 118 o del 201 al 215, el nombre de un profesor o una zona principal.';
+}
 
 // ═══════════════════════════════════════
 // VISTAS
@@ -524,18 +876,14 @@ const views = {
 
   info: () => {
     const r=SALONES[state.salonBuscado];
-    const jornadaBlock=(j,jornada,label)=>{
+    const jornadaBlock=(j)=>{
       if(!j) return '';
-      const estadoLocal=getEstado(state.salonBuscado,jornada)||j.estado||'disponible';
       return `<div class="info-row" style="align-items:flex-start;">
-        <div class="info-ic">🕐</div>
+        <div class="info-ic">🧑‍🏫</div>
         <div class="info-txt" style="flex:1;">
-          <small>${label}</small>
           <strong>${j.grado&&j.grado!=="—"?"Grado "+j.grado+" · ":""}${j.nombre}</strong>
           ${j.area?`<div style="color:var(--muted);font-size:12px;margin-top:2px;">${j.area}</div>`:''}
-          ${j.horario?`<div style="color:var(--muted);font-size:12px;margin-top:1px;">🕐 ${j.horario}</div>`:''}
         </div>
-        ${estadoBadge(estadoLocal)}
       </div>`;
     };
     return `
@@ -549,8 +897,8 @@ const views = {
           <div class="info-ic">🏫</div>
           <div class="info-txt"><small>Salón</small><strong>${r.nombre} — Piso ${r.piso}</strong></div>
         </div>
-        ${jornadaBlock(r.manana,'manana','Jornada mañana')}
-        ${jornadaBlock(r.tarde,'tarde','Jornada tarde')}
+        ${jornadaBlock(r.manana)}
+        ${jornadaBlock(r.tarde)}
         ${(!r.manana&&!r.tarde)?'<div class="info-row"><div class="info-txt"><strong>Sin docente asignado</strong></div></div>':''}
       </div>
       <div style="height:16px"></div>
@@ -588,34 +936,18 @@ const views = {
       <p class="search-sub" style="margin-top:10px;">
         Desde: <b>${state.origenLabel}</b> → <b>${destino.nombre}</b> (Piso ${destino.piso})
       </p>
-      <button class="btn btn-primary" data-go="pasos">Ver indicaciones paso a paso</button>
+      <button class="btn btn-primary" data-go="flechas">Iniciar navegación con fotos</button>
     </div>
     ${bottomNav('mapa')}
     `;
   },
 
-  pasos: () => `
-    <div class="fade">
-      <h3 style="margin:0 0 12px;color:var(--ink);font-size:17px;">Indicaciones</h3>
-      <div class="card">
-        ${state.pasos.map((p,i)=>`
-          <div class="step-item">
-            <div class="step-num">${i+1}</div>
-            <div class="step-ic">${p.ic}</div>
-            <div class="step-text">${p.txt}</div>
-          </div>`).join('')}
-      </div>
-      <div style="height:16px"></div>
-      <button class="btn btn-primary" data-go="flechas">Iniciar navegación con fotos</button>
-    </div>
-    ${bottomNav('mapa')}
-  `,
-
   flechas: () => {
     const p=state.pasos[state.pasoActual];
     const total=state.pasos.length;
     const nodeId=state.caminoIds?.[state.pasoActual];
-    const foto=nodeId?getFoto(nodeId):null;
+    const destinoNodeId=SALONES[state.salonBuscado]?.nodeId;
+    const foto=nodeId?getFotoRuta(state.origenId,destinoNodeId,nodeId):null;
     return `
     <div class="arrow-scene fade">
       <div class="progress-label">PASO ${state.pasoActual+1} DE ${total}</div>
@@ -647,6 +979,9 @@ const views = {
           ${state.pasoActual===total-1?'¡Llegué! ✓':'Siguiente →'}
         </button>
       </div>
+      <button class="btn btn-ghost" id="leerIndicacionBtn" style="margin-top:10px;">🔊 Escuchar y seguir el paso</button>
+      <button class="btn btn-ghost" id="leerRutaBtn" style="margin-top:8px;">🔊 Escuchar ruta completa</button>
+      <p id="estadoLecturaRuta" role="status" aria-live="polite" style="font-size:12px;color:var(--muted);"></p>
     </div>
     ${bottomNav('mapa')}
     `;
@@ -660,6 +995,7 @@ const views = {
       <div class="check-circle">✓</div>
       <h2>¡Has llegado!</h2>
       <p>Estás en ${r.nombre}</p>
+      <button class="btn btn-ghost" id="leerLlegadaBtn" style="margin-bottom:10px;">🔊 Escuchar mensaje</button>
       <button class="btn btn-primary" data-go="sitio" id="finBtn">Nueva búsqueda</button>
     </div>
     ${bottomNav('inicio')}
@@ -668,13 +1004,46 @@ const views = {
 
   menu: () => `
     <div class="fade">
+      <h3 style="margin:0 0 14px;color:var(--ink);font-size:17px;">Ayuda</h3>
+      <div class="menu-item" data-go="asistenteVoz">
+        <div class="menu-ic">🎤</div><div class="menu-txt">Asistente de voz</div>
+      </div>
+      <div class="menu-item" data-go="zonas">
+        <div class="menu-ic">📍</div><div class="menu-txt">Zonas principales del colegio</div>
+      </div>
+      <div class="menu-item" data-go="directorio">
+        <div class="menu-ic">🧑‍🏫</div><div class="menu-txt">Profesores por orden alfabético</div>
+      </div>
+    </div>
+    ${bottomNav('ayuda')}
+  `,
+
+  asistenteVoz: () => `
+    <div class="fade">
+      <h3 style="margin:0 0 8px;color:var(--ink);font-size:19px;">Asistente de voz</h3>
+      <p class="search-sub">Pregunta por la ubicación de un salón, un profesor o una zona del colegio.</p>
+      <div class="card">
+        <label for="consultaVozInput" style="display:block;margin:8px 0;font-size:13px;font-weight:700;">Escribe tu pregunta</label>
+        <input class="room-input" id="consultaVozInput" type="text" maxlength="120"
+          placeholder="¿Dónde queda el salón 203?">
+        <button class="btn btn-ghost" id="enviarConsultaVozBtn" type="button">Consultar</button>
+        <p id="estadoVoz" role="status" aria-live="polite" style="font-size:13px;color:var(--muted);margin:14px 0 0;">
+          Escribe una pregunta sobre un salón, profesor o zona del colegio.
+        </p>
+        <p id="transcripcionVoz" aria-live="polite" style="font-size:14px;color:var(--ink);line-height:1.5;"></p>
+      </div>
+      <button class="btn btn-ghost" data-go="menu" style="margin-top:14px;">← Volver a Ayuda</button>
+    </div>
+    ${bottomNav('ayuda')}
+  `,
+
+  zonas: () => `
+    <div class="fade">
       <h3 style="margin:0 0 14px;color:var(--ink);font-size:17px;">Zonas principales del colegio</h3>
       ${SITIOS.map(s=>`<div class="menu-item" data-zona="${s.id}">
         <div class="menu-ic">${s.icon}</div><div class="menu-txt">${s.label}</div>
       </div>`).join('')}
-      <div class="menu-item" data-go="directorio">
-        <div class="menu-ic">🧑‍🏫</div><div class="menu-txt">Directorio de docentes</div>
-      </div>
+      <button class="btn btn-ghost" data-go="menu" style="margin-top:14px;">← Volver a Ayuda</button>
     </div>
     ${bottomNav('ayuda')}
   `,
@@ -694,7 +1063,7 @@ const views = {
         <h3>📍 Ubicación</h3>
         <p>${zona.desc}</p>
       </div>
-      <button class="btn btn-ghost" data-go="menu" style="margin-bottom:14px;">← Volver a zonas</button>
+      <button class="btn btn-ghost" data-go="zonas" style="margin-bottom:14px;">← Volver a zonas</button>
     </div>
     ${bottomNav('ayuda')}
     `;
@@ -702,12 +1071,13 @@ const views = {
 
   directorio: () => `
     <div class="fade">
-      <h3 style="margin:0 0 12px;color:var(--ink);font-size:17px;">Docentes sin salón fijo</h3>
+      <h3 style="margin:0 0 12px;color:var(--ink);font-size:17px;">Profesores por orden alfabético</h3>
+      <p class="search-sub">Nombre, grado y salón asignado.</p>
       <div class="card">
-        ${DOCENTES_ITINERANTES.map(d=>`
+        ${obtenerDirectorioDocentes().map(d=>`
           <div class="info-row">
             <div class="info-ic">🧑‍🏫</div>
-            <div class="info-txt"><small>${d.area}</small><strong>${d.nombre}</strong></div>
+            <div class="info-txt"><small>${d.grado} · ${d.salon}</small><strong>${d.nombre}</strong></div>
           </div>`).join('')}
       </div>
       <div style="height:14px"></div>
@@ -733,7 +1103,9 @@ const views = {
   adminPanel: () => `
     <div class="fade">
       <h2 class="search-title">Panel de administración</h2>
-      <p class="search-sub">${Object.keys(SALONES).length} salones · ${Object.keys(FOTOS).length} fotos</p>
+      <p class="search-sub">${Object.keys(SALONES).length} salones · ${Object.keys(FOTOS_RUTA).length||Object.keys(FOTOS).length} fotos de rutas</p>
+      <p role="status" aria-live="polite" style="font-size:12px;color:var(--muted);">${estadoRutasServidor}</p>
+      <p role="status" aria-live="polite" style="font-size:12px;color:var(--muted);">${estadoGuardarSalones}</p>
 
       <div class="menu-item" data-go="adminSalones" style="margin-bottom:10px;">
         <div class="menu-ic">🏫</div><div class="menu-txt">Gestionar salones y docentes</div>
@@ -741,14 +1113,14 @@ const views = {
       <div class="menu-item" data-go="adminFotos" style="margin-bottom:10px;">
         <div class="menu-ic">📸</div><div class="menu-txt">Gestionar fotos de rutas</div>
       </div>
-      <div style="height:8px"></div>
-      <button class="btn btn-ghost" data-go="landing">Salir del modo administrador</button>
+      <button class="btn btn-ghost" data-admin-logout>Salir del modo administrador</button>
     </div>
   `,
 
   adminSalones: () => `
     <div class="fade">
       <h2 class="search-title">Salones</h2>
+      <p role="status" aria-live="polite" style="font-size:12px;color:var(--muted);">${estadoGuardarSalones}</p>
       <button class="btn btn-primary" style="margin-bottom:14px;" data-go="adminForm">+ Agregar salón</button>
       <div class="card" style="max-height:400px;overflow-y:auto;">
         ${Object.entries(SALONES).map(([num,r])=>`
@@ -764,12 +1136,6 @@ const views = {
 
   adminForm: () => {
     const e=state.adminEditando, r=e?SALONES[e]:null;
-    const disponOpts=(val)=>[
-      {v:'disponible',l:'Disponible'},
-      {v:'en_clase',l:'En clase'},
-      {v:'no_disponible',l:'No disponible'}
-    ].map(o=>`<option value="${o.v}" ${val===o.v?'selected':''}>${o.l}</option>`).join('');
-
     return `
     <div class="fade">
       <h2 class="search-title">${e?'Editar '+r.nombre:'Agregar salón'}</h2>
@@ -779,31 +1145,19 @@ const views = {
       <input class="room-input" id="fPiso" placeholder="Piso (1 o 2)" style="font-size:16px;"
         value="${r?r.piso:''}">
 
-      <h3 style="font-size:14px;color:var(--ink);margin:16px 0 8px;">Jornada mañana</h3>
+      <h3 style="font-size:14px;color:var(--ink);margin:16px 0 8px;">Docente · jornada mañana</h3>
       <input class="room-input" id="fGradoM" placeholder="Grado (ej. 6A)" style="font-size:14px;" value="${r?.manana?.grado||''}">
       <div style="height:6px"></div>
       <input class="room-input" id="fNombreM" placeholder="Nombre del docente" style="font-size:14px;" value="${r?.manana?.nombre||''}">
       <div style="height:6px"></div>
       <input class="room-input" id="fAreaM" placeholder="Área / materia" style="font-size:14px;" value="${r?.manana?.area||''}">
-      <div style="height:6px"></div>
-      <input class="room-input" id="fHorarioM" placeholder="Horario (ej. 7:00 a.m. – 12:00 m.)" style="font-size:14px;" value="${r?.manana?.horario||''}">
-      <div style="height:6px"></div>
-      <select class="room-input" id="fEstadoM" style="font-size:14px;">
-        ${disponOpts(r?.manana?.estado||'disponible')}
-      </select>
 
-      <h3 style="font-size:14px;color:var(--ink);margin:16px 0 8px;">Jornada tarde</h3>
+      <h3 style="font-size:14px;color:var(--ink);margin:16px 0 8px;">Docente · jornada tarde</h3>
       <input class="room-input" id="fGradoT" placeholder="Grado (ej. 3-A)" style="font-size:14px;" value="${r?.tarde?.grado||''}">
       <div style="height:6px"></div>
       <input class="room-input" id="fNombreT" placeholder="Nombre del docente" style="font-size:14px;" value="${r?.tarde?.nombre||''}">
       <div style="height:6px"></div>
       <input class="room-input" id="fAreaT" placeholder="Área / materia" style="font-size:14px;" value="${r?.tarde?.area||''}">
-      <div style="height:6px"></div>
-      <input class="room-input" id="fHorarioT" placeholder="Horario (ej. 1:00 p.m. – 6:00 p.m.)" style="font-size:14px;" value="${r?.tarde?.horario||''}">
-      <div style="height:6px"></div>
-      <select class="room-input" id="fEstadoT" style="font-size:14px;">
-        ${disponOpts(r?.tarde?.estado||'disponible')}
-      </select>
 
       <div style="height:16px"></div>
       <button class="btn btn-primary" id="guardarBtn">Guardar</button>
@@ -814,31 +1168,74 @@ const views = {
 
   adminFotos: () => `
     <div class="fade">
-      <h2 class="search-title">Fotos de rutas</h2>
-      <p class="search-sub">Agrega o cambia las fotos de cada punto del recorrido. Aparecen en la navegación paso a paso.</p>
-      <div class="card">
-        ${Object.entries(NODOS).map(([id,nodo])=>{
-          const foto=getFoto(id);
-          return `
-          <div class="foto-manage-item">
-            <div class="foto-manage-thumb">
-              ${foto?`<img src="${foto}" style="width:100%;height:100%;object-fit:cover;border-radius:9px;">`:'📷'}
-            </div>
-            <div class="foto-manage-txt">
-              <strong>${nodo.label}</strong>
-              <small>Piso ${nodo.piso||1}</small>
-            </div>
-            <label class="btn-foto-upload">
-              ${foto?'✏️ Cambiar':'+ Foto'}
-              <input type="file" accept="image/*" data-upload-nodo="${id}" style="display:none;">
-            </label>
-          </div>`;
-        }).join('')}
+      <h2 class="search-title">Gestionar fotos de rutas</h2>
+      <p class="search-sub">Sube una foto JPEG de salón o selecciona un salón para gestionar las fotos de sus rutas.</p>
+      <div class="card" style="margin-bottom:14px;">
+        <h3 style="font-size:15px;color:var(--ink);margin:0 0 8px;">Subir y guardar foto de un salón</h3>
+        <form action="guardar_foto.php" method="post" enctype="multipart/form-data">
+          <label for="fotoSalonNum" style="display:block;margin:12px 0 6px;font-size:13px;font-weight:700;">Salón</label>
+          <select id="fotoSalonNum" name="salon" required class="room-input" style="font-size:15px;">
+            <option value="">Selecciona un salón</option>
+            ${Object.entries(SALONES).map(([num,r])=>`<option value="${num}">${r.nombre}</option>`).join('')}
+          </select>
+          <label for="fotoSalonArchivo" style="display:block;margin:12px 0 6px;font-size:13px;font-weight:700;">Foto JPEG (máximo 5 MB)</label>
+          <input id="fotoSalonArchivo" name="foto" type="file" accept=".jpg,.jpeg,image/jpeg" required>
+          <input type="hidden" name="MAX_FILE_SIZE" value="5242880">
+          <button class="btn btn-primary" type="submit" style="margin-top:12px;">📷 Guardar foto del salón</button>
+        </form>
+      </div>
+      <div class="card" style="max-height:400px;overflow-y:auto;">
+        ${Object.entries(SALONES).map(([num,r])=>`
+          <div class="info-row" data-fotos-salon="${num}" style="cursor:pointer;">
+            <div class="info-ic">🏫</div>
+            <div class="info-txt"><small>Piso ${r.piso} · 5 rutas disponibles</small><strong>${r.nombre}</strong></div>
+            <div style="color:var(--green-dark);font-size:18px;">›</div>
+          </div>`).join('')}
       </div>
       <div style="height:14px"></div>
       <button class="btn btn-ghost" data-go="adminPanel">Volver</button>
     </div>
   `,
+
+  adminFotosRuta: () => {
+    const salon=SALONES[state.adminFotosSalon];
+    if(!salon) return '<div class="fade"><p>Salón no encontrado.</p><button class="btn btn-ghost" data-go="adminFotos">Volver</button></div>';
+    if(!state.adminFotosOrigen){
+      return `
+      <div class="fade">
+        <h2 class="search-title">Fotos · ${salon.nombre}</h2>
+        <p class="search-sub">Elige uno de los 5 lugares de inicio para ver y editar esa ruta.</p>
+        ${SITIOS.map(s=>`<div class="menu-item" data-fotos-origen="${s.id}">
+          <div class="menu-ic">${s.icon}</div><div class="menu-txt">${s.label}</div><div style="color:var(--green-dark);font-size:18px;">›</div>
+        </div>`).join('')}
+        <div style="height:8px"></div>
+        <button class="btn btn-ghost" data-go="adminFotos">Volver a salones</button>
+      </div>`;
+    }
+    const camino=state.adminFotosCamino||[];
+    const guardado=obtenerRutaGuardada(claveRuta(state.adminFotosOrigen,salon.nodeId));
+    const pasosActuales=combinarPasos(camino,guardado?.etiquetas);
+    return `
+    <div class="fade">
+      <h2 class="search-title">${salon.nombre}</h2>
+      <p class="search-sub">Ruta desde: <strong>${NODOS[state.adminFotosOrigen]?.label||state.adminFotosOrigen}</strong>. Cambia la foto de cada paso.</p>
+      <div class="card" style="margin-bottom:14px;">
+        ${camino.map((id,i)=>{
+          const p=pasosActuales[i]||{ic:'📍',txt:NODOS[id]?.label||id};
+          const foto=getFotoRuta(state.adminFotosOrigen,salon.nodeId,id);
+          return `<div class="foto-route-step">
+            <div class="step-num">${i+1}</div>
+            <div class="foto-route-preview">${foto?`<img src="${foto}" alt="Foto de ${NODOS[id]?.label||id}">`:`${p.ic}`}</div>
+            <div class="foto-route-copy"><strong>${p.txt}</strong><small>${NODOS[id]?.label||id} · Piso ${NODOS[id]?.piso||salon.piso||1}</small></div>
+            <label class="btn-foto-upload">${foto?'✏️ Cambiar':'+ Foto'}<input type="file" accept="image/*" data-upload-ruta-step="${id}" style="display:none;"></label>
+          </div>`;
+        }).join('')}
+      </div>
+      <button class="btn btn-primary" id="editarRutaDesdeFotosBtn" style="margin-bottom:10px;">✏️ Editar paso a paso de esta ruta</button>
+      <button class="btn btn-ghost" id="cambiarFotosOrigenBtn" style="margin-bottom:10px;">← Cambiar lugar de inicio</button>
+      <button class="btn btn-ghost" data-go="adminFotos">Volver a salones</button>
+    </div>`;
+  },
 
   adminRuta: () => {
     const salon=SALONES[state.adminRutaSalon];
@@ -871,6 +1268,7 @@ const views = {
             </div>`).join('')}
         </div>
         <button class="btn btn-primary" id="editarPasoAPasoBtn" style="margin-bottom:10px;">✏️ Editar pasos</button>
+        <p role="status" aria-live="polite" style="font-size:12px;color:var(--muted);">${state.estadoGuardarRuta}</p>
         <button class="btn btn-ghost" data-go="adminForm">Volver</button>
       </div>`;
     }
@@ -889,6 +1287,7 @@ const views = {
       </div>
       <button class="btn btn-ghost" id="agregarPasoBtn" style="margin-bottom:16px;">+ Agregar punto</button>
       <button class="btn btn-primary" id="guardarRutaBtn" style="margin-bottom:10px;">Guardar ruta</button>
+      <p id="estadoGuardarRuta" role="status" aria-live="polite" style="font-size:12px;color:var(--muted);"></p>
       <button class="btn btn-ghost" id="cancelarEdicionBtn" style="margin-bottom:10px;">Cancelar</button>
     </div>`;
   },
@@ -900,6 +1299,23 @@ const views = {
 function attachHandlers(view){
   document.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.go)));
   document.querySelectorAll('[data-navgo]').forEach(el=>el.addEventListener('click',()=>go(el.dataset.navgo)));
+  document.querySelectorAll('[data-admin-logout]').forEach(el=>el.addEventListener('click',async()=>{
+    if(sesionAdminServidor){
+      try{
+        const respuesta=await fetch('api.php?action=admin-logout',{
+          method:'POST',
+          credentials:'same-origin',
+          headers:{'Accept':'application/json'},
+        });
+        if(!respuesta.ok) throw new Error('El servidor no confirmó el cierre de sesión.');
+      }catch(error){
+        console.error('No se pudo cerrar la sesión de administración del servidor:',error);
+      }
+    }
+    sesionAdminServidor=false;
+    state.modo=null;
+    go('landing');
+  }));
 
   if(view==='sitio'){
     document.querySelectorAll('[data-sitio]').forEach(el=>el.addEventListener('click',()=>{
@@ -909,11 +1325,31 @@ function attachHandlers(view){
     }));
   }
 
-  if(view==='menu'){
+  if(view==='menu'||view==='zonas'){
     document.querySelectorAll('[data-zona]').forEach(el=>el.addEventListener('click',()=>{
       state.zonaSeleccionada=el.dataset.zona;
       go('zonaDetalle');
     }));
+  }
+
+  if(view==='asistenteVoz'){
+    const responderTexto=()=>{
+      const input=document.getElementById('consultaVozInput');
+      const estado=document.getElementById('estadoVoz');
+      const transcripcion=document.getElementById('transcripcionVoz');
+      const respuesta=responderConsultaVoz(input.value);
+      if(!input.value.trim()){
+        estado.textContent='Escribe una pregunta para consultar.';
+        return;
+      }
+      transcripcion.textContent=`Respuesta: ${respuesta}`;
+      estado.textContent='Consulta respondida.';
+      hablar(respuesta);
+    };
+    document.getElementById('enviarConsultaVozBtn').addEventListener('click',responderTexto);
+    document.getElementById('consultaVozInput').addEventListener('keydown',evento=>{
+      if(evento.key==='Enter') responderTexto();
+    });
   }
 
   if(view==='home'){
@@ -964,6 +1400,23 @@ function attachHandlers(view){
   }
 
   if(view==='flechas'){
+    const leerEstado=document.getElementById('estadoLecturaRuta');
+    const destino=SALONES[state.salonBuscado]?.nombre||'tu destino';
+    document.getElementById('leerIndicacionBtn').addEventListener('click',()=>{
+      const texto=textoAnimadoDelPaso(
+        state.pasoActual,
+        state.pasos.length,
+        destino,
+        state.pasos[state.pasoActual].txt
+      );
+      const resultado=hablar(texto);
+      leerEstado.textContent=resultado.mensaje;
+    });
+    document.getElementById('leerRutaBtn').addEventListener('click',()=>{
+      const texto=textoAnimadoDeRuta(state.origenLabel,destino,state.pasos);
+      const resultado=hablar(texto);
+      leerEstado.textContent=resultado.mensaje;
+    });
     const nextBtn=document.getElementById('nextStepBtn');
     if(nextBtn) nextBtn.addEventListener('click',()=>{
       if(state.pasoActual<state.pasos.length-1){ state.pasoActual++; render(); }
@@ -975,11 +1428,44 @@ function attachHandlers(view){
     });
   }
 
+  if(view==='llegada'){
+    document.getElementById('leerLlegadaBtn').addEventListener('click',()=>{
+      hablar(`Has llegado. Estás en ${SALONES[state.salonBuscado]?.nombre||'tu destino'}.`);
+    });
+  }
+
   if(view==='adminPin'){
-    const tryPin=()=>{
+    const tryPin=async()=>{
       const v=document.getElementById('pinInput').value;
-      if(v==='1234'){ state.modo='admin'; go('adminPanel'); }
-      else document.getElementById('pinErr').style.display='block';
+      const error=document.getElementById('pinErr');
+      error.style.display='none';
+      if(v!=='1234'){
+        error.textContent='PIN incorrecto.';
+        error.style.display='block';
+        return;
+      }
+
+      await Promise.all([sincronizarRutasServidor(),sincronizarSalonesServidor()]);
+      if(location.protocol!=='file:'&&servidorRutasDisponible){
+        try{
+          const respuesta=await fetch('api.php?action=admin-login',{
+            method:'POST',
+            credentials:'same-origin',
+            headers:{'Content-Type':'application/json','Accept':'application/json'},
+            body:JSON.stringify({pin:v}),
+          });
+          const datos=await respuesta.json();
+          if(!respuesta.ok) throw new Error(datos.error||'No se pudo iniciar sesión en el servidor.');
+          sesionAdminServidor=true;
+          estadoRutasServidor='Conectado: los cambios de rutas se guardarán para todos los navegadores.';
+        }catch(errorServidor){
+          sesionAdminServidor=false;
+          estadoRutasServidor=`Modo local: no se pudo iniciar sesión en el servidor (${errorServidor.message}).`;
+          console.error('No se pudo iniciar la sesión de administración del servidor:',errorServidor);
+        }
+      }
+      state.modo='admin';
+      go('adminPanel');
     };
     document.getElementById('pinBtn').addEventListener('click',tryPin);
     document.getElementById('pinInput').addEventListener('keydown',e=>{ if(e.key==='Enter') tryPin(); });
@@ -998,45 +1484,76 @@ function attachHandlers(view){
       state.adminRutaOrigen=null; state.adminRutaCamino=null; state.adminRutaEditando=false;
       go('adminRuta');
     });
-    document.getElementById('guardarBtn').addEventListener('click',()=>{
+    document.getElementById('guardarBtn').addEventListener('click',async()=>{
       const numero=state.adminEditando||document.getElementById('fNumero').value.trim();
       if(!numero){ alert('Escribe un número de salón.'); return; }
       const piso=parseInt(document.getElementById('fPiso').value)||1;
       const gM=document.getElementById('fGradoM').value.trim();
       const nM=document.getElementById('fNombreM').value.trim();
       const aM=document.getElementById('fAreaM').value.trim();
-      const hM=document.getElementById('fHorarioM').value.trim();
-      const eM=document.getElementById('fEstadoM').value;
       const gT=document.getElementById('fGradoT').value.trim();
       const nT=document.getElementById('fNombreT').value.trim();
       const aT=document.getElementById('fAreaT').value.trim();
-      const hT=document.getElementById('fHorarioT').value.trim();
-      const eT=document.getElementById('fEstadoT').value;
       const nodeId=SALONES[numero]?.nodeId||crearNodoParaSalonNuevo(numero,piso);
       SALONES[numero]={
         nombre:`Salón ${numero}`, piso, nodeId,
-        manana:nM?{grado:gM||"—",nombre:nM,area:aM||null,horario:hM||null,estado:eM}:null,
-        tarde:nT?{grado:gT||"—",nombre:nT,area:aT||null,horario:hT||null,estado:eT}:null,
+        manana:nM?{grado:gM||"—",nombre:nM,area:aM||null}:null,
+        tarde:nT?{grado:gT||"—",nombre:nT,area:aT||null}:null,
       };
       guardarSalones(SALONES);
       state.adminEditando=null;
+      estadoGuardarSalones=await guardarSalonesServidor(SALONES);
       go('adminSalones');
     });
   }
 
   if(view==='adminFotos'){
-    document.querySelectorAll('[data-upload-nodo]').forEach(input=>{
+    document.querySelectorAll('[data-fotos-salon]').forEach(el=>el.addEventListener('click',()=>{
+      state.adminFotosSalon=el.dataset.fotosSalon;
+      state.adminFotosOrigen=null;
+      state.adminFotosCamino=null;
+      go('adminFotosRuta');
+    }));
+    return;
+  }
+
+  if(view==='adminFotosRuta'){
+    const salon=SALONES[state.adminFotosSalon];
+    if(!state.adminFotosOrigen){
+      document.querySelectorAll('[data-fotos-origen]').forEach(el=>el.addEventListener('click',()=>{
+        const origenId=el.dataset.fotosOrigen;
+        const guardado=obtenerRutaGuardada(claveRuta(origenId,salon.nodeId));
+        state.adminFotosOrigen=origenId;
+        state.adminFotosCamino=guardado?.camino||bfsPath(origenId,salon.nodeId)||[origenId,salon.nodeId];
+        render();
+      }));
+      return;
+    }
+    document.querySelectorAll('[data-upload-ruta-step]').forEach(input=>{
       input.addEventListener('change',()=>{
         const file=input.files[0]; if(!file) return;
-        const nodeId=input.dataset.uploadNodo;
+        const nodeId=input.dataset.uploadRutaStep;
         const reader=new FileReader();
         reader.onload=()=>{
-          FOTOS[nodeId]=reader.result;
-          guardarFotos(FOTOS);
+          const destino=salon.nodeId;
+          FOTOS_RUTA[claveFotoRuta(state.adminFotosOrigen,destino,nodeId)]=reader.result;
+          guardarFotosRuta(FOTOS_RUTA);
           render();
         };
         reader.readAsDataURL(file);
       });
+    });
+    const cambiarOrigen=document.getElementById('cambiarFotosOrigenBtn');
+    if(cambiarOrigen) cambiarOrigen.addEventListener('click',()=>{
+      state.adminFotosOrigen=null; state.adminFotosCamino=null; render();
+    });
+    const editarRuta=document.getElementById('editarRutaDesdeFotosBtn');
+    if(editarRuta) editarRuta.addEventListener('click',()=>{
+      state.adminRutaSalon=state.adminFotosSalon;
+      state.adminRutaOrigen=state.adminFotosOrigen;
+      state.adminRutaCamino=[...(state.adminFotosCamino||[])];
+      state.adminRutaEditando=false;
+      go('adminRuta');
     });
   }
 
@@ -1098,12 +1615,20 @@ function attachHandlers(view){
       state.adminRutaCamino=state.adminRutaSnapshot||state.adminRutaCamino;
       state.adminRutaEditando=false; render();
     });
-    document.getElementById('guardarRutaBtn').addEventListener('click',()=>{
+    document.getElementById('guardarRutaBtn').addEventListener('click',async()=>{
       const clave=claveRuta(state.adminRutaOrigen,salon.nodeId);
-      RUTAS_PERSONALIZADAS[clave]={camino:[...state.adminRutaCamino],etiquetas:[...state.adminRutaEtiquetas]};
-      guardarRutas(RUTAS_PERSONALIZADAS);
+      if(state.adminRutaEtiquetas.some(etiqueta=>!etiqueta.trim())){
+        state.estadoGuardarRuta='Completa el texto de todos los pasos antes de guardar.';
+        render();
+        return;
+      }
+      const ruta={camino:[...state.adminRutaCamino],etiquetas:[...state.adminRutaEtiquetas]};
+      RUTAS_PERSONALIZADAS[clave]=ruta;
+      const guardadoLocal=guardarRutas(RUTAS_PERSONALIZADAS);
+      state.estadoGuardarRuta=guardadoLocal
+        ? await guardarRutaServidor(clave,ruta)
+        : 'No se pudo guardar la ruta en el almacenamiento local del navegador.';
       state.adminRutaEditando=false;
-      alert('Ruta guardada.');
       render();
     });
   }
@@ -1113,6 +1638,8 @@ function attachHandlers(view){
 // INICIO
 // ═══════════════════════════════════════
 go('landing');
+sincronizarRutasServidor();
+sincronizarSalonesServidor();
 </script>
 </body>
 </html>

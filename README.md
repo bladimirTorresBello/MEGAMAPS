@@ -4,9 +4,9 @@ Aplicativo web de navegación y búsqueda de salones para el Megacolegio El Prog
 
 ## 📱 Cómo usar
 
-1. **Abre `index.html`** en cualquier navegador (desktop o mobile)
+1. **Abre `index.html`** en cualquier navegador (desktop o mobile); para compartir rutas editadas, sirve el proyecto mediante Apache/XAMPP y abre su dirección `http://localhost/...`
 2. La aplicación funciona **sin internet** (offline)
-3. Todos los datos se guardan en **localStorage** del navegador
+3. Los datos locales se guardan en **localStorage**; las rutas personalizadas pueden compartirse entre navegadores mediante PHP y SQLite cuando se usa Apache/XAMPP
 
 ## 🎯 Modos
 
@@ -14,14 +14,19 @@ Aplicativo web de navegación y búsqueda de salones para el Megacolegio El Prog
 - Selecciona tu ubicación actual
 - Busca un salón por número o nombre de docente
 - Recibe ruta paso a paso con fotos reales
-- Ve información de docentes y horarios
+- Ve información de docentes, grados y áreas
 
 ### Administrador
 - PIN: `1234`
 - Gestiona salones y docentes
-- Sube fotos de puntos de referencia
+- Gestiona fotos por salón y por ruta
+- Sube fotos JPEG de salones desde «Gestionar fotos de rutas» en el servidor con PHP y SQLite (requiere XAMPP/Apache)
+- Guarda los cambios de salones y docentes en SQLite para compartirlos entre navegadores cuando se usa XAMPP
+- Consulta las zonas y los profesores con el asistente de voz; puede leer en voz alta los pasos de navegación
+- La guía de voz prefiere voces femeninas en español disponibles en el dispositivo y acompaña las instrucciones con mensajes motivadores
+- Selecciona uno de los 5 lugares de inicio y visualiza el paso a paso completo
+- Sube o cambia la foto de cada paso; las fotos quedan guardadas para esa ruta
 - Edita rutas personalizadas
-- Cambia disponibilidad de docentes
 
 ## 🏢 Estructura
 
@@ -32,7 +37,7 @@ Aplicativo web de navegación y búsqueda de salones para el Megacolegio El Prog
 
 ## 📊 Datos
 
-- Docentes y horarios actualizados
+- Docentes, grados y áreas actualizados
 - Pisos 1 y 2
 - Planos del colegio
 - Fotos de entrada, cafetería, transición, coordinación y biblioteca

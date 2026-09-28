@@ -8,12 +8,9 @@ const NODOS = {
 
   restaurante:      { label:"Restaurante", x:0.40, y:0.10 },
   parqueadero:      { label:"Parqueadero", x:0.08, y:0.05 },
-  sala_juegos:      { label:"Sala de juegos", x:0.06, y:0.16 },
   sala_profesores:  { label:"Sala de profesores", x:0.12, y:0.17 },
-  oficina_inclusion:{ label:"Oficina de inclusión", x:0.16, y:0.18 },
   escaleras_izq:    { label:"Escaleras", x:0.10, y:0.34 },
   escaleras_principales: { label:"Escaleras principales", x:0.42, y:0.55 },
-  jardin:           { label:"Jardín", x:0.90, y:0.42 },
   pasillo_der:      { label:"Pasillo derecho", x:0.90, y:0.30 },
   pasillo_piso2:    { label:"Pasillo Nivel 2", x:0.42, y:0.86 },
 
@@ -38,11 +35,13 @@ const NODOS = {
   salon_115:{ label:"Salón 115", x:0.75, y:0.82, piso:1 },
 
   salon_201:{ label:"Salón 201", x:0.10, y:0.92, piso:2 },
+  salon_202:{ label:"Salón 202", x:0.14, y:0.92, piso:2 },
   salon_203:{ label:"Salón 203", x:0.17, y:0.92, piso:2 },
   salon_204:{ label:"Salón 204", x:0.24, y:0.92, piso:2 },
   salon_205:{ label:"Salón 205", x:0.31, y:0.92, piso:2 },
   salon_206:{ label:"Salón 206", x:0.38, y:0.92, piso:2 },
   salon_207:{ label:"Salón 207", x:0.55, y:0.92, piso:2 },
+  salon_208:{ label:"Salón 208", x:0.59, y:0.92, piso:2 },
   salon_209:{ label:"Salón 209", x:0.62, y:0.92, piso:2 },
   salon_210:{ label:"Salón 210", x:0.69, y:0.92, piso:2 },
   salon_211:{ label:"Salón 211", x:0.76, y:0.92, piso:2 },

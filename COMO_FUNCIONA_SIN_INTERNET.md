@@ -1,10 +1,11 @@
 # Que la app funcione SIN internet en el celular
 
 ## Lo que ya está listo en el código
-- `API_BASE_URL` está vacío en `script.js` → la app nunca intenta
-  contactar ningún servidor. Todos los datos (52 salones/lugares,
-  directorio real de docentes) están escritos directo en el código,
-  no en una base de datos externa.
+- Los datos principales (salones, lugares y directorio de docentes)
+  están disponibles en el cliente y la navegación funciona sin servidor.
+- Si se abre con Apache/XAMPP, las rutas personalizadas se sincronizan
+  con `megamaps.sqlite`; al abrir el archivo directamente, solo se
+  guardan en el almacenamiento local de ese navegador.
 - `manifest.json` + `sw.js` (service worker) → permiten que el
   celular guarde una copia completa de la app la primera vez que la
   abre, y la siga usando después sin señal.
@@ -45,3 +46,7 @@ Si de verdad nunca va a haber wifi/datos disponibles ni siquiera una vez:
 **Los datos y la lógica ya no dependen de internet para nada** — lo
 único que puede llegar a necesitar señal es la entrega inicial del
 archivo al celular, una sola vez, y solo si eliges la Opción A.
+
+
+mira al momento de editar en la aplicacion web en el apartado de administrador, y edito las rutas, en visual studio code aparece la correcion pero al momento de abrilo en el index.html no.
+quiero que corrijas eso manito

@@ -109,11 +109,13 @@ const DATOS_SALONES_BASE = {
   "118":{piso:1, manana:{grado:"7E",nombre:"Eliana Yulieth Cuervo Higuera",area:null}},
 
   "201":{piso:2, manana:{grado:"11B",nombre:"Diego Alfonso Avila Moreno",area:"Ética - Religión"}},
+  "202":{piso:2, manana:null, tarde:null},
   "203":{piso:2, manana:{grado:"—", nombre:"Jose Alberto Silva Gil", area:"Ética - Religión"}, tarde:{grado:"5-A", nombre:"Gilma Ines Cely Avila", area:"Ética y Religión - Informática"}},
   "204":{piso:2, manana:{grado:"7D", nombre:"Fabian Alexander Morales Rodriguez", area:"Ética - Religión"}, tarde:{grado:"5-B", nombre:"Maria Mercedes Reyes Sanchez", area:"Sociales, Inglés, Artes"}},
   "205":{piso:2, manana:{grado:"6D", nombre:"Arcely Ortiz Gualdron", area:null}, tarde:{grado:"5-C", nombre:"Gonzalo Mendoza Rojas", area:"Matemáticas, Geometría, Estadística"}},
   "206":{piso:2, manana:{grado:"9A", nombre:"Rolando Enrique Acosta Perez", area:"Física"}, tarde:{grado:"5-D", nombre:"Camilo Murillo Asprilla", area:"Naturales, Educación Física"}},
   "207":{piso:2, manana:{grado:"11A",nombre:"Nancy Fabiola Chaparro Lopez",area:"Naturales - Química"}},
+  "208":{piso:2, manana:null, tarde:null},
   "209":{piso:2, manana:{grado:"8C",nombre:"Felix Riaches Chaparro",area:"Artes"}},
   "210":{piso:2, manana:{grado:"7C",nombre:"Fabio Andres Ampudia Castillo",area:"C. Políticas - Sociales"}},
   "211":{piso:2, manana:{grado:"AC A",nombre:"Ana Elsa Sepulveda Caro",area:null}},
@@ -186,7 +188,8 @@ const STORAGE_KEY = "megamaps_salones_v3";
 const LUGARES_ELIMINADOS = [
   "biblioteca","taller_manualidades","laboratorio2","almacen_pedagogico",
   "enfermeria","rectoria","sala_academicos","aula_multiple","aula_ingles",
-  "aula_class","idi_clase","idi_lounge","banos_116"
+  "aula_class","idi_clase","idi_lounge","banos_116",
+  "oficina_inclusion","sala_juegos","jardin"
 ];
 
 function cargarSalones(){
@@ -210,6 +213,18 @@ function cargarSalones(){
   }
 
   let huboLimpieza = false;
+  Object.entries(DATOS_SALONES_BASE).forEach(([num,d]) => {
+    if(!data[num]){
+      data[num] = {
+        nombre: /^\d+$/.test(num) ? `Salón ${num}` : NODOS[d.nodeIdOverride]?.label || num,
+        nodeId: d.nodeIdOverride || `salon_${num}`,
+        piso: d.piso,
+        manana: d.manana || null,
+        tarde: d.tarde || null
+      };
+      huboLimpieza = true;
+    }
+  });
   LUGARES_ELIMINADOS.forEach(id => {
     if(data[id]){ delete data[id]; huboLimpieza = true; }
   });
@@ -967,4 +982,313 @@ sincronizarConServidor().then(huboServidor => {
    file://, eso es una limitación normal del navegador, no un error). */
 if('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')){
   navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+/**
+ * Envía los datos actualizados del panel de administración al servidor Flask.
+ * 
+ * @param {number|string} idSitio - ID del sitio a modificar.
+ * @param {string} rutaFoto - Nombre o URL de la nueva fotografía.
+ * @param {string} textoPasos - Instrucciones detalladas de la ruta.
+ */
+async function guardarEnBaseDeDatos(idSitio, rutaFoto, textoPasos) {
+  const datosAEnviar = {
+    id_sitio: idSitio,
+    foto: rutaFoto,
+    pasos: textoPasos
+  };
+try {
+    const respuesta = await fetch('http://localhost:5000/api/actualizar-sitio', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(datosAEnviar)
+    });
+
+    const resultado = await respuesta.json();
+
+    if (respuesta.ok && resultado.status === 'exito') {
+      alert('✅ ¡Cambios guardados con éxito en la base de datos!');
+      console.log(resultado.mensaje);
+    } else {
+      alert('❌ Error al guardar en la base de datos: ' + resultado.mensaje);
+    }
+  } catch (error) {
+    console.error('Error en la solicitud HTTP:', error);
+    alert('❌ No se pudo conectar con el servidor Python (server.py). Asegúrate de que esté encendido.');
+  }
+}
+// Vinculación con el formulario de administración
+document.addEventListener('DOMContentLoaded', () => {
+  const formularioAdmin = document.getElementById('form-admin');
+
+  if (formularioAdmin) {
+    formularioAdmin.addEventListener('submit', (evento) => {
+      evento.preventDefault(); // Evita que la página se recargue automáticamente
+
+      // Obtener los valores de los campos del formulario
+      const idSitio = document.getElementById('input-sitio-id').value;
+      const foto = document.getElementById('input-foto-url').value;
+      const pasos = document.getElementById('input-pasos-texto').value;
+
+      // Ejecutar la función para guardar en SQLite
+      guardarEnBaseDeDatos(idSitio, foto, pasos);
+    });
+  }
+});
+let RUTAS_PERSONALIZADAS = cargarRutasPersonalizadas();
+const FOTOS_STORAGE_KEY = "megamaps_fotos_salon_v1";
+function cargarFotosSalones(){
+  try{
+    const g = localStorage.getItem(FOTOS_STORAGE_KEY);
+    return g ? JSON.parse(g) : {};
+  }catch(e){ return {}; }
+}
+function guardarFotosSalones(data){
+  try{
+    localStorage.setItem(FOTOS_STORAGE_KEY, JSON.stringify(data));
+    return true;
+  }catch(e){
+    alert('No se pudo guardar las fotos en este navegador (' + e.message + ').');
+    return false;
+    let FOTOS_SALONES = cargarFotosSalones();
+  }
+}
+let FOTOS_SALONES = cargarFotosSalones();
+function comprimirFoto(archivo){
+  return new Promise((resolve, reject) => {
+    const lector = new FileReader();
+    lector.onerror = () => reject(new Error('No se pudo leer el archivo'));
+    lector.onload = (e) => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('El archivo no es una imagen válida'));
+      img.onload = () => {
+        const anchoMax = 900;
+        const escala = Math.min(1, anchoMax / img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * escala);
+        canvas.height = Math.round(img.height * escala);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.72));
+      };
+      img.src = e.target.result;
+    };
+    lector.readAsDataURL(archivo);
+  });
+}
+function comprimirFoto(archivo){
+  return new Promise((resolve, reject) => {
+    const lector = new FileReader();
+    lector.onerror = () => reject(new Error('No se pudo leer el archivo'));
+    lector.onload = (e) => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('El archivo no es una imagen válida'));
+      img.onload = () => {
+        const anchoMax = 900;
+        const escala = Math.min(1, anchoMax / img.width);
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.width * escala);
+        canvas.height = Math.round(img.height * escala);
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL('image/jpeg', 0.72));
+      };
+      img.src = e.target.result;
+    };
+    lector.readAsDataURL(archivo);
+  });
+}
+  try{
+    const res = await fetch(`${API_BASE_URL}/api/fotos.php`); // si usas Flask en vez de PHP, quita ".php"
+    if(res.ok){
+      const remotas = await res.json();
+      Object.assign(FOTOS_SALONES, remotas);
+      guardarFotosSalones(FOTOS_SALONES);
+      huboServidor = true;
+    }
+  }
+  catch(e){ /* sin servidor disponible, seguimos con las fotos locales */ }
+    confirm: () => {
+    const r = SALONES[state.salonBuscado];
+    return `
+    <div class="confirm-wrap fade">
+      <div class="pin-big">📍</div>
+      <h2>¿Deseas ir al ${r.nombre}?</h2>
+      <p>Desde: ${state.origenLabel}</p>
+      <button class="btn btn-primary" style="margin-bottom:10px" data-go="mapa">Sí, ir</button>
+      <button class="btn btn-ghost" id="verFotosRutaBtn" style="margin-bottom:10px">📷 Ver fotos de la ruta</button>
+      <button class="btn btn-ghost" data-go="home">Cancelar</button>
+    </div>
+    ${bottomNav('mapa')}
+    `;
+  }
+    if(view === 'confirm'){
+    const verFotosBtn = document.getElementById('verFotosRutaBtn');
+    if(verFotosBtn) verFotosBtn.addEventListener('click', ()=> mostrarGaleriaFotos(state.salonBuscado));
+  }
+  function mostrarFotoAmpliada(dataUrl){
+  const overlay = document.createElement('div');
+  overlay.className = 'foto-overlay';
+  overlay.innerHTML = `<img src="${dataUrl}" alt="Foto ampliada"><button class="foto-overlay-cerrar" aria-label="Cerrar">✕</button>`;
+  overlay.addEventListener('click', () => overlay.remove());
+  document.body.appendChild(overlay);
+}
+
+function mostrarGaleriaFotos(numero){
+  const fotos = FOTOS_SALONES[numero] || [];
+  let idx = 0;
+  const overlay = document.createElement('div');
+  overlay.className = 'galeria-overlay';
+
+  function pintar(){
+    if(fotos.length === 0){
+      overlay.innerHTML = `
+        <div class="galeria-vacia">
+          <p>Todavía no hay fotos de esta ruta.</p>
+          <button class="btn btn-ghost galeria-cerrar-btn">Cerrar</button>
+        </div>`;
+    } else {
+      overlay.innerHTML = `
+        <div class="galeria-topbar">
+          <span class="galeria-contador">${idx+1} / ${fotos.length}</span>
+          <button class="galeria-cerrar-btn" aria-label="Cerrar">✕</button>
+        </div>
+        <div class="galeria-imgwrap"><img src="${fotos[idx]}" class="galeria-img" alt="Foto ${idx+1} de la ruta"></div>
+        <div class="galeria-controles">
+          <button class="galeria-nav galeria-prev" ${fotos.length<2?'disabled':''}>‹ Anterior</button>
+          <button class="galeria-nav galeria-siguiente" ${fotos.length<2?'disabled':''}>Siguiente ›</button>
+        </div>`;
+      overlay.querySelector('.galeria-prev')?.addEventListener('click', (e)=>{ e.stopPropagation(); idx=(idx-1+fotos.length)%fotos.length; pintar(); });
+      overlay.querySelector('.galeria-siguiente')?.addEventListener('click', (e)=>{ e.stopPropagation(); idx=(idx+1)%fotos.length; pintar(); });
+      overlay.querySelector('.galeria-img')?.addEventListener('click', (e)=>{ e.stopPropagation(); mostrarFotoAmpliada(fotos[idx]); });
+    }
+    overlay.querySelector('.galeria-cerrar-btn')?.addEventListener('click', (e)=>{ e.stopPropagation(); overlay.remove(); });
+  }
+  pintar();
+  document.body.appendChild(overlay);
+}
+function mostrarFotoAmpliada(dataUrl){
+  const overlay = document.createElement('div');
+  overlay.className = 'foto-overlay';
+  overlay.innerHTML = `<img src="${dataUrl}" alt="Foto ampliada"><button class="foto-overlay-cerrar" aria-label="Cerrar">✕</button>`;
+  overlay.addEventListener('click', () => overlay.remove());
+  document.body.appendChild(overlay);
+}
+
+function mostrarGaleriaFotos(numero){
+  const fotos = FOTOS_SALONES[numero] || [];
+  let idx = 0;
+  const overlay = document.createElement('div');
+  overlay.className = 'galeria-overlay';
+
+  function pintar(){
+    if(fotos.length === 0){
+      overlay.innerHTML = `
+        <div class="galeria-vacia">
+          <p>Todavía no hay fotos de esta ruta.</p>
+          <button class="btn btn-ghost galeria-cerrar-btn">Cerrar</button>
+        </div>`;
+    } else {
+      overlay.innerHTML = `
+        <div class="galeria-topbar">
+          <span class="galeria-contador">${idx+1} / ${fotos.length}</span>
+          <button class="galeria-cerrar-btn" aria-label="Cerrar">✕</button>
+        </div>
+        <div class="galeria-imgwrap"><img src="${fotos[idx]}" class="galeria-img" alt="Foto ${idx+1} de la ruta"></div>
+        <div class="galeria-controles">
+          <button class="galeria-nav galeria-prev" ${fotos.length<2?'disabled':''}>‹ Anterior</button>
+          <button class="galeria-nav galeria-siguiente" ${fotos.length<2?'disabled':''}>Siguiente ›</button>
+        </div>`;
+      overlay.querySelector('.galeria-prev')?.addEventListener('click', (e)=>{ e.stopPropagation(); idx=(idx-1+fotos.length)%fotos.length; pintar(); });
+      overlay.querySelector('.galeria-siguiente')?.addEventListener('click', (e)=>{ e.stopPropagation(); idx=(idx+1)%fotos.length; pintar(); });
+      overlay.querySelector('.galeria-img')?.addEventListener('click', (e)=>{ e.stopPropagation(); mostrarFotoAmpliada(fotos[idx]); });
+    }
+    overlay.querySelector('.galeria-cerrar-btn')?.addEventListener('click', (e)=>{ e.stopPropagation(); overlay.remove(); });
+  }
+  pintar();
+  document.body.appendChild(overlay);
+}
+{editando ? `<button class="btn btn-ghost" id="editarRutaBtn">🧭 Editar Ruta</button><div style="height:8px"></div>` : ''}
+{editando ? `<button class="btn btn-ghost" id="editarFotosBtn">📷 Fotos de la ruta</button><div style="height:8px"></div>` : ''}
+
+    const editarFotosBtn = document.getElementById('editarFotosBtn');
+    if(editarFotosBtn){
+      editarFotosBtn.addEventListener('click', ()=>{
+        state.adminFotosSalon = state.adminEditando;
+        go('adminFotos');
+      });
+    }
+      adminFotos: () => {
+    const numero = state.adminFotosSalon;
+    const fotos = FOTOS_SALONES[numero] || [];
+    const salon = SALONES[numero];
+    return `
+    <div class="fade">
+      <h2 class="search-title">Fotos de la ruta — ${salon.nombre}</h2>
+      <p class="search-sub">Estas fotos son las que ve el usuario al presionar "Ir" hacia este salón.</p>
+      <div class="fotos-grid">
+        ${fotos.map((f,i)=>`
+          <div class="foto-grid-item">
+            <img src="${f}" alt="Foto ${i+1}">
+            <button class="mini-btn foto-grid-quitar" data-quitar-foto-salon="${i}" title="Quitar">✕</button>
+          </div>`).join('')}
+      </div>
+      <input type="file" accept="image/*" id="inputAgregarFotoSalon" style="display:none;" multiple>
+      <button class="btn btn-primary" id="agregarFotoSalonBtn" style="margin:14px 0 10px;">+ Agregar foto</button>
+      <button class="btn btn-ghost" data-go="adminForm">Volver</button>
+    </div>
+    ${bottomNav('salones')}
+    `;
+  }
+    if(view === 'adminFotos'){
+    const numero = state.adminFotosSalon;
+
+    document.getElementById('agregarFotoSalonBtn').addEventListener('click', ()=>{
+      document.getElementById('inputAgregarFotoSalon').click();
+    });
+
+    document.getElementById('inputAgregarFotoSalon').addEventListener('change', async (e)=>{
+      if(!FOTOS_SALONES[numero]) FOTOS_SALONES[numero] = [];
+      for(const archivo of e.target.files){
+        try{
+          const comprimida = await comprimirFoto(archivo);
+          FOTOS_SALONES[numero].push(comprimida);
+        }catch(err){ /* se ignora un archivo que no sea una imagen válida */ }
+      }
+      guardarFotosSalones(FOTOS_SALONES);
+      await subirFotosAlServidor(numero); // <- esto es lo que las "conecta" a la base de datos
+      render();
+    });
+
+    document.querySelectorAll('[data-quitar-foto-salon]').forEach(el=>{
+      el.addEventListener('click', async ()=>{
+        const i = parseInt(el.dataset.quitarFotoSalon);
+        FOTOS_SALONES[numero].splice(i, 1);
+        guardarFotosSalones(FOTOS_SALONES);
+        await subirFotosAlServidor(numero);
+        render();
+      });
+    });
+  }
+  async function subirFotosAlServidor(numero){
+  if(!API_BASE_URL) return; // no hay servidor configurado, se queda solo en este celular
+  try{
+    const res = await fetch(`${API_BASE_URL}/api/fotos.php?numero=${encodeURIComponent(numero)}`, { // sin ".php" si usas Flask
+      method: 'PUT',
+      headers: { 'Content-Type':'application/json', 'X-Admin-Key': state.adminKey || '' },
+      body: JSON.stringify({ fotos: FOTOS_SALONES[numero] || [] })
+    });
+    if(res.status === 401){ alert('Clave de administrador incorrecta en el servidor. Las fotos se guardaron solo en este celular por ahora.'); }
+    else if(!res.ok){ alert('El servidor respondió con un error. Las fotos se guardaron solo en este celular por ahora.'); }
+  }catch(e){
+    alert('No se pudo contactar al servidor (¿está encendido?). Las fotos se guardaron solo en este celular por ahora.');
+  }
+}
+      <button class="btn btn-ghost" id="verFotosDesdeRutaBtn" style="margin-bottom:10px">📷 Ver fotos de la ruta</button>
+        if(view === 'pasos'){
+    const btn = document.getElementById('verFotosDesdeRutaBtn');
+    if(btn) btn.addEventListener('click', ()=> mostrarGaleriaFotos(state.salonBuscado));
+  }
+  
 }

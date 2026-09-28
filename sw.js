@@ -1,4 +1,4 @@
-const CACHE = "megamaps-v5-emojis-restaurados"; // tabla de emojis restaurada
+const CACHE = "megamaps-v7-admin-salones";
 const ARCHIVOS = [
   "./",
   "./index.html",
@@ -29,6 +29,8 @@ self.addEventListener("activate", (e) => {
 
 // Estrategia: cache primero, y si no está, va a la red y lo guarda para la próxima.
 self.addEventListener("fetch", (e) => {
+  const pathname = new URL(e.request.url).pathname;
+  if (e.request.method !== "GET" || pathname.endsWith("/api.php") || pathname.endsWith("/guardar_foto.php")) return;
   e.respondWith(
     caches.match(e.request).then(
       (cached) =>

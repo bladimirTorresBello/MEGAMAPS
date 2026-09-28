@@ -222,6 +222,11 @@
       "area": "Ética - Religión"
     }
   },
+  "202": {
+    "piso": 2,
+    "manana": null,
+    "tarde": null
+  },
   "203": {
     "piso": 2,
     "manana": {
@@ -281,6 +286,11 @@
       "nombre": "Nancy Fabiola Chaparro Lopez",
       "area": "Naturales - Química"
     }
+  },
+  "208": {
+    "piso": 2,
+    "manana": null,
+    "tarde": null
   },
   "209": {
     "piso": 2,

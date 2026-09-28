@@ -51,10 +51,78 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-DB_PATH = Path(__file__).parent / "megamaps.db"
+DB_PATH = Path(__file__).parent / "megamaps.sqlite"
 SEED_PATH = Path(__file__).parent / "datos_salones_seed.json"
 
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import sqlite3
 
+# Inicialización del servidor Flask
+app = Flask(__name__)
+# Habilitar CORS para permitir solicitudes HTTP desde la interfaz web
+CORS(app)
+
+NOMBRE_BASE_DATOS = 'megamaps.sqlite'
+
+def obtener_conexion_db():
+    """Crea y retorna la conexión a la base de datos SQLite."""
+    conexion = sqlite3.connect(NOMBRE_BASE_DATOS)
+    conexion.row_factory = sqlite3.Row  # Permite acceder a los datos como diccionarios
+    return conexion
+
+@app.route('/api/sitios', methods=['GET'])
+def obtener_sitios():
+    """Ruta para consultar todos los sitios guardados en la base de datos."""
+    try:
+        conexion = obtener_conexion_db()
+        cursor = conexion.cursor()
+        cursor.execute("SELECT * FROM sitios")
+        filas = cursor.fetchall()
+        conexion.close()
+        
+        # Convertir los registros de la base de datos a formato JSON
+        lista_sitios = [dict(fila) for fila in filas]
+        return jsonify(lista_sitios), 200
+    except Exception as error:
+        return jsonify({'status': 'error', 'mensaje': str(error)}), 500
+
+@app.route('/api/actualizar-sitio', methods=['POST'])
+def actualizar_sitio():
+    """Ruta para guardar permanentemente los cambios del panel de administración."""
+    datos = request.get_json()
+    
+    if not datos or 'id_sitio' not in datos:
+        return jsonify({'status': 'error', 'mensaje': 'Identificador de sitio no proporcionado'}), 400
+
+    id_sitio = datos.get('id_sitio')
+    nueva_foto = datos.get('foto')
+    nuevos_pasos = datos.get('pasos')
+
+    try:
+        conexion = obtener_conexion_db()
+        cursor = conexion.cursor()
+        
+        # Actualización de los datos en SQLite
+        cursor.execute("""
+            UPDATE sitios 
+            SET foto = ?, pasos = ? 
+            WHERE id = ?
+        """, (nueva_foto, nuevos_pasos, id_sitio))
+        
+        conexion.commit()
+        conexion.close()
+
+        return jsonify({
+            'status': 'exito',
+            'mensaje': f'El sitio {id_sitio} fue actualizado correctamente en la base de datos.'
+        }), 200
+    except Exception as error:
+        return jsonify({'status': 'error', 'mensaje': str(error)}), 500
+
+if __name__ == '__main__':
+    print("🚀 Servidor MEGA MAPS ejecutándose en http://localhost:5000")
+    app.run(debug=True, port=5000)
 
 # ------------------------------------------------------------------
 # FRONTEND
