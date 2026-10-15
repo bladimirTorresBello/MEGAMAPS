@@ -1016,6 +1016,14 @@ const views = {
     <div class="fade">
       <div class="logo-wrap"><img src="assets/logo_megamaps.png" alt="MEGA MAPS — Tu ruta, tu destino, sin perderte nunca"></div>
 
+      <div class="app-footer" aria-label="Créditos de MegaMaps">
+        <div class="copyright">2026 MegaMaps - Megacolegio El Progreso. Todos los derechos reservados</div>
+        <div class="elaborado-row">
+          <span>Elaborado por:</span>
+          <button class="btn-ver" id="btnVerEquipo">Ver</button>
+        </div>
+      </div>
+
       <div class="feature-chips">
         <span>🗺️ Rutas en tiempo real</span>
         <span>🧑‍🏫 Directorio real</span>
