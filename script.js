@@ -264,15 +264,682 @@ function guardarRutasPersonalizadas(data){
   }
 }
 let RUTAS_PERSONALIZADAS = cargarRutasPersonalizadas();
-function claveRuta(origenId, destinoNodeId){ return `${origenId}__${destinoNodeId}`; }
+// ═══════════════════════════════════════
+// RUTAS PREDEFINIDAS (hardcodeadas en el código)
+// Las rutas guardadas desde el admin panel tienen prioridad.
+// Estas son el fallback permanente.
+// Clave: "origenId__salon_NNN"
+// ═══════════════════════════════════════
+const RUTAS_PREDEFINIDAS = {
 
-/** Lee una ruta guardada normalizando el formato (soporta el formato viejo, solo array de ids) */
+  "entrada__salon_101": {
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al ultimo salón de ese pasillo", "salon_101"],
+    etiquetas: [
+      "Sal de la Entrada Principal",
+      "Gira a la derecha",
+      "Sigue derecho hasta Coordinación",
+      "Coordinación",
+      "Gira a la izquierda",
+      "Sigue derecho pasando la rampa",
+      "Gira a la derecha",
+      null, null, null, null, null,
+      "Ve al último salón de ese pasillo — Salón 101"
+    ]
+  }
+
+  // Agrega más rutas aquí con el mismo formato:
+  // ,"cafeteria__salon_205": { camino:[...], etiquetas:[...] }
+   ,"cafeteria_salon_201": { 
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al ultimo salón de ese pasillo", "salon_101"],
+   etiquetas: [
+    "Sal de la cafeteria",
+    "camina recto con dirrecion hacia la rampla",
+    "Gira un poco a la izquierda",
+    "sigue recto hasta el ultimo saloón de ese pasillo",
+    "salón 101"
+   ]
+  }
+,"transicion_salon_101": {
+  camino : [ "transicion","sal de transicion","pasillo recto hasta entrada ", 
+    "entrada","sigue recto hasta coordinacion",
+    "coordiancion", "Gira a la izquierda","pasa recto por ese pasando la rampla",
+    "gira a la derecha","ve al ultimó salón de ese pasillo", ],
+ 
+  etiquetas: [
+    "Trancisión",
+    "Sal de Transicion",
+    "Sigue recto hasta La entrada",
+    "Coordinación",
+    "Gira a la izquierda",
+    "Pasa recto por ese pasillo pasando La rampla",
+    "Gira a la derecha",
+   "Ve al uiltimó salón de ese pasillo",
+  ]
+  }
+,"coordinacion_salon_101": {
+camino: ["Coordinación",
+  "Sal de Cordinación",
+
+  "Gira un poco a la derecha",
+
+  "Camina 4 pasos",
+
+  "Gira a la izquierda",
+  
+  "Siga derecho pasanado la rampla",
+  
+  "Gira a la izquierda",
+  
+  "Ve el ultimo salón de ese pasillo",
+  
+  "Salon 104",
+],
+etiquetas: [
+  "Coordinación",
+  
+  "Sal de Cordinación",
+  
+  "Gira un poco a la dercha",
+  
+  "Camina 4 pasos",
+ 
+  "Gira a la izquierda",
+ 
+  "Siga derecho pasanado la rampla",
+ 
+  "Gira a la derecha",
+ 
+  "Ve al ultimo salón de ese pasillo",
+ 
+  "Salon 104",
+  ], 
+}
+
+
+,"biblioteca_salon_101": {
+  camino: [],
+  etiquetas: [
+
+]
+}
+
+,"entrada__salon_102": {
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al ultimo salón de ese pasillo", "salon_101"],
+    etiquetas:  [
+      "Sal de la Entrada Principal",
+      "Gira a la derecha",
+      "Sigue derecho hasta Coordinación",
+      "Coordinación",
+      "Gira a la izquierda",
+      "Sigue derecho pasando la rampa",
+      "Gira a la derecha",
+      null, null, null, null, null,
+      "Ve al segundo salón de ese pasillo — Salón 102"
+    ]
+  }
+
+   ,"cafeteria_salon_102":{ 
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al ultimo salón de ese pasillo", "salon_101"],
+   etiquetas: [
+    "Sal de la cafeteria",
+    "camina recto con dirrecion hacia la rampla",
+    "Gira un poco a la izquierda",
+    "sigue recto hasta el segundo saloón de ese pasillo",
+    "salón 102",
+   ]
+    
+   }
+
+,"transicion_salon_102": {
+  camino : [ "transicion","sal de transicion","pasillo recto hasta entrada ", 
+    "entrada","sigue recto hasta coordinacion",
+    "coordiancion", "Gira a la izquierda","pasa recto por ese pasando la rampla",
+    "gira a la derecha","ve al segundo salón de ese pasillo",],
+ 
+  etiquetas: [
+    
+    "Trancisión",
+    
+    "Sal de Transicion",
+    
+    "Sigue recto hasta La entrada",
+    
+    "Coordinación",
+    
+    "Gira a la izquierda",
+    
+    "Pasa recto por ese pasillo pasando La rampla",
+    
+    "Gira a la derecha",
+    
+    "ve al segundo salón de ese pasillo",
+    
+    "Salon 102",
+
+  ]
+  }
+,"coordinacion_salon_102": {
+camino: ["Coordinación","Sal de Cordinación","Gira un poco a la dercha","Camina 4 pasos",
+"Gira a la izquierda","Siga derecho pasanado la rampla","Gira a la izquierda","Ve al primer salón de ese pasillo","Salon 104",
+],
+etiquetas: [
+  
+  "Coordinación",
+  
+  "Sal de Cordinación",
+  
+  "Gira un poco a la dercha",
+  
+  "Camina 4 pasos",
+ 
+  "Gira a la izquierda",
+ 
+  "Siga derecho pasanado la rampla",
+ 
+  "Gira a la izquierda",
+ 
+  "Ve al segundo salón de ese pasillo",
+ 
+  "Salon 102",
+ 
+]
+}
+
+,"biblioteca_salon_102": {
+   camino: [ "Biblioteca", "Sal de Biblioteca", "Una vez bajo, gira a la derecha",
+"ve al segundo salón de ese pasillo", "Salon 102",
+],
+  etiquetas: [
+
+    "Biblioteca",
+
+    "Sal de Biblioteca",
+
+    "Una vez bajo, gira a la derecha",
+
+    "ve al segundo salón de ese pasillo",
+
+    "Salon 102",
+
+  ]
+}
+
+
+,"entrada__salon_103": {
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al primer salón de ese pasillo", "salon_101"],
+    etiquetas:  [
+      
+      "Sal de la Entrada Principal",
+      
+      "Gira a la derecha",
+      
+      "Sigue derecho hasta Coordinación",
+      
+      "Coordinación",
+      
+      "Gira a la izquierda",
+      
+      "Sigue derecho pasando la rampa",
+      
+      "Gira a la derecha",
+      
+      
+      null, null, null, null, null,
+      
+      "Ve al primer salón de ese pasillo — Salón 102"
+    
+    ]
+  }
+
+   ,"cafeteria_salon_103":{ 
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al ultimo salón de ese pasillo", "salon_101"],
+   etiquetas: [
+  
+    "Sal de la cafeteria",
+
+    "camina recto con dirrecion hacia la rampla",
+    
+    "Gira un poco a la izquierda",
+    
+    "ve al primer salón de ese pasillo",
+    
+    "salón 103",
+   
+  ]
+    
+   }
+
+,"transicion_salon_103": {
+  camino : [ "transicion","sal de transicion","pasillo recto hasta entrada ", 
+    "entrada","sigue recto hasta coordinacion",
+    "coordiancion", "Gira a la izquierda","pasa recto por ese pasando la rampla",
+    "gira a la derecha","ve al primer salón de ese pasillo",],
+ 
+  etiquetas: [
+    
+    "Trancisión",
+    
+    "Sal de Transicion",
+    
+    "Sigue recto hasta La entrada",
+    
+    "Coordinación",
+    
+    "Gira a la izquierda",
+    
+    "Pasa recto por ese pasillo pasando La rampla",
+    
+    "Gira a la derecha",
+    
+    "Ve al primer salón de ese pasillo",
+    
+    "Salon 103",
+
+  ]
+  }
+,"coordinacion_salon_103": {
+camino: [
+
+  "Coordinación",
+
+ "Sal de Cordinación",
+
+ "Gira un poco a la dercha",
+
+ "Camina 4 pasos",
+
+ "Gira a la izquierda",
+ 
+ "Siga derecho pasanado la rampla",
+ 
+ "Gira a la izquierda",
+ 
+ "Ve al primer salón de ese pasillo",
+ 
+ "Salon 104",
+
+
+],
+etiquetas: [ "Coordinación",
+
+ "Sal de Cordinación", "Gira un poco a la dercha", "Camina 4 pasos",
+
+ "Gira a la izquierda",  "Siga derecho pasanado la rampla",
+
+ "Gira a la izquierda",  "Ve al primer salón de ese pasillo", "Salon 104",
+
+
+],
+etiquetas: [ "Coordinación",
+
+ "Sal de Cordinación",
+
+ "Gira un poco a la dercha",
+
+ "Camina 4 pasos",
+
+ "Gira a la izquierda",
+ 
+ "Siga derecho pasanado la rampla",
+ 
+ "Gira a la izquierda",
+ 
+ "Ve al primer salón de ese pasillo",
+ 
+ "Salon 104",
+
+]
+  
+}
+
+,"biblioteca_salon_103": {
+  camino: [ "Biblioteca", "Sal de Biblioteca", "Una vez bajo, gira a la derecha",
+"ve al primer salon de ese pasillo", "Salon 104",
+],
+  etiquetas: [
+
+    "Biblioteca",
+
+"Sal de Biblioteca",
+
+"Una vez bajo, gira a la derecha",
+
+"ve al primer salon de ese pasillo",
+
+"Salon 103",
+
+]
+}
+
+
+,"entrada__salon_104": {
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al ultimo salón de ese pasillo", "salon_101"],
+    etiquetas:  [
+      "Sal de la Entrada Principal",
+      "Gira a la derecha",
+      "Sigue derecho hasta Coordinación",
+      "Coordinación",
+      "Gira a la izquierda",
+      "Sigue derecho pasando la rampa",
+      "Gira a la derecha",
+      null, null, null, null, null,
+      "Ve al primer salón de ese pasillo", 
+      "Salón 104",
+    ]
+  }
+
+   ,"cafeteria_salon_104":{ 
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al ultimo salón de ese pasillo", "salon_101"],
+   etiquetas: [
+    
+    "Sal de la cafeteria",
+    
+    "camina recto con dirrecion hacia la rampla",
+    
+    "Gira un poco a la izquierda",
+    
+    "sigue recto hasta el primer salón de ese pasillo",
+    
+    "salón 104"
+
+   ]
+    
+   }
+
+,"transicion_salon_104": {
+  camino : [ "transicion","sal de transicion","pasillo recto hasta entrada ", 
+    "entrada","sigue recto hasta coordinacion",
+    "coordiancion", "Gira a la izquierda","pasa recto por ese pasando la rampla",
+    "gira a la izquierda","ve al primer salón de ese pasillo"],
+
+  etiquetas: [
+    
+    "Trancisión",
+    
+    "Sal de Transicion",
+    
+    "Sigue recto hasta La entrada",
+    
+    "Coordinación",
+    
+    "Gira a la izquierda",
+    
+    "Pasa recto por ese pasillo pasando La rampla",
+    
+    "Gira a la izquierda",
+    
+    "Ve al primer salón de ese pasillo",
+    
+    "Salon 104",
+  ]
+  }
+,"coordinacion_salon_104": {
+camino:
+[
+"Coordinación","Sal de Cordinación","Gira un poco a la dercha","Camina 4 pasos",
+"Gira a la izquierda","Siga derecho pasanado la rampla","Gira a la izquierda","Ve al primer salón de ese pasillo","Salon 104",
+
+],
+
+etiquetas: [
+  "Coordinación",
+  
+  "Sal de Cordinación",
+  
+  "Gira un poco a la dercha",
+  
+  "Camina 4 pasos",
+
+  "Gira a la izquierda",
+
+  "Siga derecho pasanado la rampla",
+
+  "Gira a la izquierda",
+
+ "Ve al primer salón de ese pasillo",
+ 
+ "Salon 104",
+  ] 
+  
+}
+
+,"biblioteca_salon_104": {
+    camino: [ "Bibliteca", "Sal de Biblioteca", "Una vez bajo, gira a la izquierda",
+"ve al segundo salon de ese pasillo", "Salon 105",
+],
+  etiquetas: [
+"Biblioteca",
+"Sal de Biblioteca",
+"Una vez bajo, gira a la izquierda",
+"ve al segundo salon de ese pasillo",
+"Salon 104",
+]
+}
+
+
+,"entrada__salon_105": {
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la izquierda", "ve al segundo salón de ese pasillo", "salon_105"],
+    etiquetas:  [
+      
+      "Sal de la Entrada Principal",
+      
+      "Gira a la derecha",
+      
+      "Sigue derecho hasta Coordinación",
+      
+      "Coordinación",
+      
+      "Gira a la izquierda",
+      
+      "Sigue derecho pasando la rampa",
+      
+      "Gira a la izquierda",
+      
+      null, null, null, null, null,
+      
+      "Ve al segundo salón de ese pasillo", 
+      
+      "Salón 105",
+    
+    ]
+  }
+
+   ,"cafeteria_salon_105":{ 
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al segundo de ese pasillo", "salon_101"],
+   etiquetas: [
+    "Sal de la cafeteria",
+    "camina recto con dirrecion hacia la rampla",
+    "Gira un poco a la izquierda",
+    "sigue recto hasta el segundo salón de ese pasillo",
+    "salón 104"
+   ]
+    
+   }
+
+,"transicion_salon_105": {
+  camino : [ "transicion","sal de transicion","pasillo recto hasta entrada ", 
+    "entrada","sigue recto hasta coordinacion",
+    "coordiancion", "Gira a la izquierda","pasa recto por ese pasando la rampla",
+    "gira a la izquierda","ve al segundo salón de ese pasillo"],
+
+  etiquetas: [
+    
+    "Trancisión",
+    
+    "Sal de Transicion",
+    
+    "Sigue recto hasta La entrada",
+    
+    "Coordinación",
+    
+    "Gira a la izquierda",
+    
+    "Pasa recto por ese pasillo pasando La rampla",
+    
+    "Gira a la izquierda",
+    
+    "Ve al segundo salón de ese pasillo",
+    
+    "Salon 105",
+  ]
+  }
+
+  ,"coordinacion_salon_105": {
+camino:
+[
+"Coordinación","Sal de Cordinación","Gira un poco a la dercha","Camina 4 pasos",
+"Gira a la izquierda","Siga derecho pasanado la rampla","Gira a la izquierda","Ve al segundo salón de ese pasillo", "Salon 104",
+
+],
+
+etiquetas: [
+  "Coordinación",
+  
+  "Sal de Cordinación",
+  
+  "Gira un poco a la dercha",
+  
+  "Camina 4 pasos",
+
+  "Gira a la izquierda",
+
+  "Siga derecho pasanado la rampla",
+
+  "Gira a la izquierda",
+
+ "Ve al segundo salón de ese pasillo",
+ 
+ "Salon 105",
+  ] 
+  
+}
+
+,"biblioteca_salon_105": {
+    camino: [ "Biblioteca", "Sal de Biblioteca", "Una vez bajo, gira a la izquierda",
+"ve al segundo salon de ese pasillo", "Salon 105",
+],
+  etiquetas: [
+
+    "Biblioteca",
+
+"Sal de Biblioteca",
+
+"Una vez bajo, gira a la izquierda",
+
+"ve al segundo salon de ese pasillo",
+
+"Salon 105",
+]
+}
+,"entrada__salon_106": {
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al ultimo salón de ese pasillo", "salon_106"],
+    etiquetas:  [
+  
+      "Sal de la Entrada Principal",
+  
+      "Gira a la derecha",
+  
+      "Sigue derecho hasta Coordinación",
+  
+      "Coordinación",
+  
+      "Gira a la izquierda",
+  
+      "Sigue derecho pasando la rampa",
+    
+      "Gira a la izquierda",
+      
+      null, null, null, null, null,
+      
+      "Ve al penultimo salón de ese pasillo — Salón 106"
+    
+    ]
+  }
+
+   ,"cafeteria_salon_106":{ 
+    camino: ["entrada","gira a la derecha","pasillo cordinacion","coordinacion",
+             "giro a la izquierda","pasillo rampla",
+             "gire a la derecha", "ve al ultimo salón de ese pasillo", "salon_106"],
+   etiquetas: [
+  
+    "Sal de la cafeteria",
+  
+    "camina recto con dirrecion hacia la rampla",
+  
+    "Gira un poco a la izquierda",
+  
+    "sigue recto hasta el ultimo saloón de ese pasillo",
+  
+    "salón 106"
+  
+  ]
+    
+   }
+
+,"transicion_salon_106": {
+  camino : [ "transicion","sapo","perro","triple","skibidy"],
+ 
+  etiquetas: [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+   "",
+  ]
+  }
+,"coordinacion_salon_106": {
+camino: [],
+etiquetas: ["",], 
+  
+}
+
+,"biblioteca_salon_106": {
+  camino: [],
+  etiquetas: [
+
+]
+}
+
+
+}
 function obtenerRutaGuardada(clave){
   const r = RUTAS_PERSONALIZADAS[clave];
-  if(!r) return null;
-  if(Array.isArray(r)) return { camino: r, etiquetas: null }; // formato viejo
-  return r; // formato nuevo: {camino, etiquetas}
+  if(r){
+    if(Array.isArray(r)) return {camino:r, etiquetas:null};
+    return r;
+  }
+  // Fallback: ruta predefinida en el código
+  const pre = RUTAS_PREDEFINIDAS[clave];
+  if(pre) return pre;
+  return null;
 }
+
+
 
 /** Genera los pasos combinando el ícono automático (según ángulos reales) con el texto
     que el administrador escribió a mano, si existe */
