@@ -538,6 +538,45 @@ function getFotoRuta(origenId, destinoNodeId, pasoNodeId){
   return FOTOS_RUTA[claveFotoRuta(origenId,destinoNodeId,pasoNodeId)] || getFoto(pasoNodeId) || null;
 }
 
+async function sincronizarFotosRutaServidor(subirLocales=false){
+  if(location.protocol==='file:') return;
+  for(const lugar of SITIOS){
+    const fotosLocales=Object.entries(FOTOS_RUTA).filter(([clave])=>clave.startsWith(`${lugar.id}__`));
+    if(subirLocales&&sesionAdminServidor){
+      for(const [clave,foto] of fotosLocales){
+        if(typeof foto!=='string'||!foto.startsWith('data:image/')) continue;
+        const partes=clave.split('__');
+        if(partes.length!==3) continue;
+        try{
+          const respuesta=await fetch(`api.php?action=route-photos&lugar=${encodeURIComponent(lugar.id)}`,{
+            method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','Accept':'application/json'},
+            body:JSON.stringify({clave,paso:partes[2],foto}),
+          });
+          const datos=await respuesta.json();
+          if(respuesta.ok&&datos.ruta) FOTOS_RUTA[clave]=datos.ruta;
+        }catch(error){ console.warn('No se pudo migrar una foto de ruta:',error); }
+      }
+    }
+    try{
+      const respuesta=await fetch(`api.php?action=route-photos&lugar=${encodeURIComponent(lugar.id)}`,{credentials:'same-origin',headers:{'Accept':'application/json'}});
+      const datos=await respuesta.json();
+      if(respuesta.ok&&datos.fotos&&typeof datos.fotos==='object') Object.assign(FOTOS_RUTA,datos.fotos);
+    }catch(error){ console.warn(`No se pudieron cargar las fotos de ${lugar.label}:`,error); }
+  }
+  guardarFotosRuta(FOTOS_RUTA);
+}
+
+async function guardarFotoRutaServidor(lugar,clave,paso,foto){
+  if(location.protocol==='file:'||!sesionAdminServidor||!foto.startsWith('data:image/')) return foto;
+  const respuesta=await fetch(`api.php?action=route-photos&lugar=${encodeURIComponent(lugar)}`,{
+    method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({clave,paso,foto}),
+  });
+  const datos=await respuesta.json();
+  if(!respuesta.ok) throw new Error(datos.error||'No se pudo guardar la foto en SQLite.');
+  return datos.ruta;
+}
+
 function obtenerDirectorioDocentes(){
   const docentes=Object.entries(SALONES).flatMap(([numero,salon])=>
     ['manana','tarde']
@@ -1549,6 +1588,7 @@ function attachHandlers(view){
           const datos=await respuesta.json();
           if(!respuesta.ok) throw new Error(datos.error||'No se pudo iniciar sesión en el servidor.');
           sesionAdminServidor=true;
+          await sincronizarFotosRutaServidor(true);
           estadoRutasServidor='Conectado: los cambios de rutas se guardarán para todos los navegadores.';
         }catch(errorServidor){
           sesionAdminServidor=false;
@@ -1624,13 +1664,21 @@ function attachHandlers(view){
     document.querySelectorAll('[data-upload-ruta-step]').forEach(input=>{
       input.addEventListener('change',()=>{
         const file=input.files[0]; if(!file) return;
+        if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5*1024*1024){ alert('Selecciona una foto JPEG, PNG o WebP de hasta 5 MB.'); input.value=''; return; }
         const nodeId=input.dataset.uploadRutaStep;
         const reader=new FileReader();
-        reader.onload=()=>{
+        reader.onload=async()=>{
           const destino=salon.nodeId;
-          FOTOS_RUTA[claveFotoRuta(state.adminFotosOrigen,destino,nodeId)]=reader.result;
-          guardarFotosRuta(FOTOS_RUTA);
-          render();
+          const clave=claveFotoRuta(state.adminFotosOrigen,destino,nodeId);
+          try{
+            const ruta=await guardarFotoRutaServidor(state.adminFotosOrigen,clave,nodeId,reader.result);
+            FOTOS_RUTA[clave]=ruta;
+            guardarFotosRuta(FOTOS_RUTA);
+            render();
+          }catch(error){
+            alert(`No se pudo guardar la foto: ${error.message}`);
+            render();
+          }
         };
         reader.readAsDataURL(file);
       });
@@ -1730,6 +1778,7 @@ function attachHandlers(view){
 // INICIO
 // ═══════════════════════════════════════
 go('landing');
+sincronizarFotosRutaServidor();
 sincronizarRutasServidor();
 sincronizarSalonesServidor();
 

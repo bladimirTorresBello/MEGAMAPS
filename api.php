@@ -140,6 +140,86 @@ try {
         )'
     );
 
+    $lugarFotos = isset($_GET['lugar']) && is_string($_GET['lugar']) ? $_GET['lugar'] : '';
+    $tablasFotos = [
+        'entrada' => 'fotos_entrada',
+        'cafeteria' => 'fotos_cafeteria',
+        'transicion' => 'fotos_transicion',
+        'coordinacion' => 'fotos_coordinacion',
+        'biblioteca' => 'fotos_biblioteca',
+    ];
+    if ($lugarFotos !== '' && isset($tablasFotos[$lugarFotos])) {
+        $pdo = new PDO('sqlite:' . __DIR__ . DIRECTORY_SEPARATOR . 'fotos_rutas_personalidas.sqlite');
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo->exec('PRAGMA journal_mode = WAL');
+        $pdo->exec('PRAGMA busy_timeout = 5000');
+        foreach ($tablasFotos as $tablaInicial) {
+            $pdo->exec("CREATE TABLE IF NOT EXISTS {$tablaInicial} (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                salon_numero TEXT NOT NULL CHECK (length(salon_numero) = 3),
+                clave TEXT,
+                paso_node_id TEXT,
+                ruta TEXT,
+                actualizado_en TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE (clave, paso_node_id)
+            )");
+            $pdo->exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_{$tablaInicial}_salon_vacio
+                ON {$tablaInicial} (salon_numero) WHERE clave IS NULL");
+            $stmtInicial = $pdo->prepare("INSERT OR IGNORE INTO {$tablaInicial} (salon_numero) VALUES (:salon)");
+            foreach (array_merge(range(101, 118), range(201, 215)) as $numeroSalon) {
+                $stmtInicial->execute(['salon' => (string) $numeroSalon]);
+            }
+            $pdo->exec("CREATE INDEX IF NOT EXISTS idx_{$tablaInicial}_salon ON {$tablaInicial} (salon_numero)");
+        }
+        $tablaFoto = $tablasFotos[$lugarFotos];
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $stmt = $pdo->query("SELECT clave, ruta FROM {$tablaFoto} WHERE clave IS NOT NULL ORDER BY salon_numero, clave");
+            responder(200, ['fotos' => $stmt->fetchAll(PDO::FETCH_KEY_PAIR)]);
+        }
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Allow: GET, POST');
+            responder(405, ['error' => 'Método no permitido.']);
+        }
+        if (empty($_SESSION['megamaps_admin'])) {
+            responder(401, ['error' => 'Inicia sesión como administrador para guardar fotos.']);
+        }
+        $entradaFoto = json_decode(file_get_contents('php://input'), true);
+        $claveFoto = is_array($entradaFoto) && isset($entradaFoto['clave']) && is_string($entradaFoto['clave'])
+            ? $entradaFoto['clave'] : '';
+        $pasoFoto = is_array($entradaFoto) && isset($entradaFoto['paso']) && is_string($entradaFoto['paso'])
+            ? $entradaFoto['paso'] : '';
+        $contenidoFoto = is_array($entradaFoto) && isset($entradaFoto['foto']) && is_string($entradaFoto['foto'])
+            ? $entradaFoto['foto'] : '';
+        if (!preg_match('/^' . preg_quote($lugarFotos, '/') . '__salon_(\d{3})__salon_\d{3}$/', $claveFoto, $coincidencia)
+            || !identificadorValido($pasoFoto)
+            || !preg_match('/^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+\/=]+)$/', $contenidoFoto, $imagen)) {
+            responder(400, ['error' => 'La foto o su salón no tienen un formato válido.']);
+        }
+        $binario = base64_decode($imagen[2], true);
+        if ($binario === false || strlen($binario) < 1 || strlen($binario) > 5 * 1024 * 1024) {
+            responder(400, ['error' => 'La foto debe pesar hasta 5 MB.']);
+        }
+        $mime = (new finfo(FILEINFO_MIME_TYPE))->buffer($binario);
+        $extensiones = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+        if (!isset($extensiones[$mime]) || getimagesizefromstring($binario) === false) {
+            responder(400, ['error' => 'El archivo no es una imagen válida.']);
+        }
+        $directorioFotos = __DIR__ . DIRECTORY_SEPARATOR . 'fotos_rutas';
+        if (!is_dir($directorioFotos) && !mkdir($directorioFotos, 0755, true) && !is_dir($directorioFotos)) {
+            throw new RuntimeException('No se pudo crear fotos_rutas.');
+        }
+        $nombreFoto = $lugarFotos . '-' . $coincidencia[1] . '-' . hash('sha256', $claveFoto . '|' . $pasoFoto) . '.' . $extensiones[$mime];
+        $rutaRelativa = 'fotos_rutas/' . $nombreFoto;
+        if (file_put_contents(__DIR__ . DIRECTORY_SEPARATOR . $rutaRelativa, $binario, LOCK_EX) === false) {
+            throw new RuntimeException('No se pudo guardar la imagen.');
+        }
+        $stmt = $pdo->prepare("INSERT INTO {$tablaFoto} (salon_numero, clave, paso_node_id, ruta, actualizado_en)
+            VALUES (:salon, :clave, :paso, :ruta, CURRENT_TIMESTAMP)
+            ON CONFLICT(clave, paso_node_id) DO UPDATE SET ruta = excluded.ruta, actualizado_en = CURRENT_TIMESTAMP");
+        $stmt->execute(['salon' => $coincidencia[1], 'clave' => $claveFoto, 'paso' => $pasoFoto, 'ruta' => $rutaRelativa]);
+        responder(200, ['ok' => true, 'ruta' => $rutaRelativa]);
+    }
+
     $accion = isset($_GET['action']) && is_string($_GET['action'])
         ? $_GET['action']
         : '';
